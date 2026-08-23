@@ -344,6 +344,97 @@
   }
   .pub-thumb { position: relative; }
 
+  /* ─────── TOOLS ─────── */
+  .tool-card {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 36px;
+    align-items: center;
+    padding: 30px 34px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    box-shadow: 0 8px 32px rgba(20, 33, 61, 0.06);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .tool-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 14px 36px rgba(20, 33, 61, 0.11);
+  }
+  .tool-figure {
+    width: 100%;
+    background: #f4f9fb;
+    border: 1px solid #dfeaee;
+    border-radius: 4px;
+    padding: 10px;
+  }
+  .tool-figure svg { width: 100%; height: auto; display: block; }
+  .pulse-ring { animation: pulse 2.6s cubic-bezier(0.4, 0, 0.2, 1) infinite; transform-origin: 110px 100px; }
+  @keyframes pulse {
+    0%   { r: 10; opacity: 0.55; }
+    100% { r: 74; opacity: 0; }
+  }
+  .tool-kicker {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+  .tool-body h3 {
+    font-family: var(--serif);
+    font-size: 21px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .tool-body p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink-mid);
+    margin-bottom: 14px;
+    max-width: 62ch;
+  }
+  .tool-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 20px;
+  }
+  .tool-meta span {
+    font-size: 11.5px;
+    font-weight: 500;
+    padding: 4px 11px;
+    background: var(--bg-alt);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    color: var(--ink-mid);
+  }
+  .tool-open {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 20px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    transition: filter 0.15s ease, transform 0.15s ease;
+  }
+  .tool-open:hover { filter: brightness(1.1); transform: translateY(-1px); text-decoration: none; }
+  .tool-open:focus-visible { outline: 3px solid #efb135; outline-offset: 3px; }
+  .tool-note {
+    margin-top: 18px;
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    max-width: 780px;
+  }
+
   /* ─────── EDUCATION ─────── */
   .edu-list {
     display: grid;
@@ -462,6 +553,8 @@
     nav ul { gap: 16px; }
     nav ul a { font-size: 13px; }
     .edu-item { grid-template-columns: 1fr; gap: 6px; }
+    .tool-card { grid-template-columns: 1fr; gap: 22px; padding: 22px 20px; }
+    .tool-figure { max-width: 260px; margin: 0 auto; }
   }
 
   /* ─────── ANIMATIONS ─────── */
@@ -475,6 +568,13 @@
   .pub-card:nth-child(2) { animation-delay: 0.15s; }
   .pub-card:nth-child(3) { animation-delay: 0.25s; }
   .pub-card:nth-child(4) { animation-delay: 0.35s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .hero-card, .pub-card { animation: none; }
+    .pulse-ring { animation: none; opacity: 0.3; }
+    .tool-open:hover { transform: none; }
+  }
 </style>
 </head>
 <body>
@@ -486,6 +586,7 @@
     <ul>
       <li><a href="#about">About</a></li>
       <li><a href="#publications">Publications</a></li>
+      <li><a href="#tools">Tools</a></li>
       <li><a href="#education">Education</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -612,6 +713,50 @@
       </article>
 
     </div>
+  </div>
+</section>
+
+<!-- ───────── TOOLS ───────── -->
+<section id="tools">
+  <div class="container">
+    <div class="section-sub">Open Tools</div>
+    <h2 class="section-title">Things you can run in the browser.</h2>
+
+    <article class="tool-card">
+      <div class="tool-figure">
+        <!-- Schematic: epicentre at centre, search radius, volcanoes inside and outside -->
+        <svg viewBox="0 0 220 200" role="img" aria-label="Schematic of a search radius around an earthquake epicentre with volcanoes marked inside and outside the circle">
+          <circle class="pulse-ring" cx="110" cy="100" r="10" fill="none" stroke="#c1440e" stroke-width="2" />
+          <circle cx="110" cy="100" r="74" fill="rgba(18,129,148,0.06)" stroke="#128194" stroke-width="1.6" stroke-dasharray="7 6" />
+          <line x1="110" y1="100" x2="110" y2="26" stroke="#9fb8c0" stroke-width="1" />
+          <text x="115" y="66" font-family="Inter, sans-serif" font-size="10" fill="#5e7480">500 km</text>
+          <!-- volcanoes inside the radius -->
+          <path d="M64 84 L57 98 L71 98 Z" fill="#c93626" />
+          <path d="M104 52 L98 65 L110 65 Z" fill="#e28217" />
+          <path d="M146 118 L140 131 L152 131 Z" fill="#137b8b" />
+          <path d="M92 140 L86 153 L98 153 Z" fill="#7a4fa3" />
+          <!-- volcano outside the radius -->
+          <path d="M196 62 L190 75 L202 75 Z" fill="#b8c4c9" />
+          <!-- epicentre -->
+          <circle cx="110" cy="100" r="7" fill="#14213d" stroke="#fff" stroke-width="2" />
+        </svg>
+      </div>
+
+      <div class="tool-body">
+        <div class="tool-kicker">Interactive · runs entirely in your browser</div>
+        <h3>Earthquake–Volcano Proximity Explorer</h3>
+        <p>Pick a time window and a magnitude threshold, load the USGS catalogue, then click any earthquake. The tool lists every Smithsonian GVP Holocene volcano inside your chosen radius, with distance, azimuth and last known eruption, on a schematic plot and an optional satellite basemap.</p>
+        <div class="tool-meta">
+          <span>USGS FDSN events</span>
+          <span>GVP Holocene catalogue</span>
+          <span>Distance &amp; azimuth table</span>
+          <span>Satellite basemap</span>
+        </div>
+        <a class="tool-open" href="tools/eq-volcano-explorer/">Open the explorer →</a>
+      </div>
+    </article>
+
+    <p class="tool-note">The volcano catalogue is bundled with the page, so the tool works as soon as it opens. You can also load a newer GVP export of your own; the file is read in your browser and is never sent anywhere. Proximity is spatial context only — a volcano inside the radius does not by itself imply earthquake-triggered activity.</p>
   </div>
 </section>
 
