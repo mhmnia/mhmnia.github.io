@@ -3,605 +3,86 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Mohammadhossein Mohammadnia — Earth Scientist · InSAR · Volcanology</title>
-<meta name="description" content="Mohammadhossein Mohammadnia — PhD researcher in Earth Sciences at the University of Hong Kong. InSAR, volcano deformation, and geophysical modeling." />
+<title>Mohammadhossein Mohammadnia — InSAR & Volcano Geodesy</title>
+<meta name="description" content="Mohammadhossein Mohammadnia, PhD — solid-Earth geodesist using InSAR to measure volcano and tectonic deformation. Developer of the open-source common-mode filtering (CMF) method." />
+<link rel="canonical" href="https://mhmnia.github.io/" />
+<meta name="author" content="Mohammadhossein Mohammadnia" />
 
+<!-- Link previews (X, LinkedIn, Slack, WhatsApp, Bluesky) -->
+<meta property="og:type" content="profile" />
+<meta property="og:site_name" content="Mohammadhossein Mohammadnia" />
+<meta property="og:title" content="Mohammadhossein Mohammadnia — InSAR & Volcano Geodesy" />
+<meta property="og:description" content="Measuring how the ground moves, from space. InSAR time series, volcano deformation, and the open-source common-mode filtering method." />
+<meta property="og:url" content="https://mhmnia.github.io/" />
+<meta property="og:image" content="https://mhmnia.github.io/images/hero.jpg" />
+<meta property="og:image:alt" content="InSAR line-of-sight velocity maps showing volcano deformation" />
+<meta property="og:locale" content="en_GB" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@nirvana2462" />
+<meta name="twitter:creator" content="@nirvana2462" />
+<meta name="twitter:title" content="Mohammadhossein Mohammadnia — InSAR & Volcano Geodesy" />
+<meta name="twitter:description" content="Measuring how the ground moves, from space. InSAR time series, volcano deformation, and the open-source common-mode filtering method." />
+<meta name="twitter:image" content="https://mhmnia.github.io/images/hero.jpg" />
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
 
-<style>
-  :root {
-    --bg: #ffffff;
-    --bg-alt: #f6f7f9;
-    --ink: #14213d;
-    --ink-mid: #4a5568;
-    --ink-soft: #6b7280;
-    --line: #e5e7eb;
-    --accent: #c1440e;        /* volcano red-orange */
-    --accent-soft: #fef2ed;
-    --serif: "Lora", Georgia, serif;
-    --sans: "Inter", -apple-system, system-ui, sans-serif;
-  }
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Mohammadhossein Mohammadnia",
+  "givenName": "Mohammadhossein",
+  "familyName": "Mohammadnia",
+  "jobTitle": "Solid-Earth Geodesist",
+  "url": "https://mhmnia.github.io/",
+  "image": "https://mhmnia.github.io/images/profile.jpg",
+  "email": "mailto:mh.mohammadnia1@gmail.com",
+  "identifier": "https://orcid.org/0009-0000-2193-2980",
+  "alumniOf": [
+    { "@type": "CollegeOrUniversity", "name": "The University of Hong Kong" },
+    { "@type": "CollegeOrUniversity", "name": "Institute for Advanced Studies in Basic Sciences (IASBS)" }
+  ],
+  "knowsAbout": ["InSAR", "Volcano geodesy", "Ground deformation", "Atmospheric correction", "Geophysical inversion", "Salt tectonics"],
+  "sameAs": [
+    "https://orcid.org/0009-0000-2193-2980",
+    "https://scholar.google.com/citations?user=CLB8v-cAAAAJ&hl=en",
+    "https://www.researchgate.net/profile/Mohammadhosein-Mohammadnia",
+    "https://github.com/mohammadnia11",
+    "https://twitter.com/nirvana2462"
+  ]
+}
+</script>
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body {
-    background: var(--bg);
-    color: var(--ink);
-    font-family: var(--sans);
-    font-size: 16px;
-    line-height: 1.65;
-    -webkit-font-smoothing: antialiased;
-  }
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  img { display: block; max-width: 100%; }
-
-  .container {
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 0 24px;
-  }
-
-  /* ─────── NAVIGATION ─────── */
-  nav {
-    position: sticky;
-    top: 0;
-    background: rgba(255, 255, 255, 0.94);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--line);
-    z-index: 100;
-  }
-  nav .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 24px;
-  }
-  nav .brand {
-    font-family: var(--serif);
-    font-weight: 600;
-    font-size: 16px;
-    color: var(--ink);
-  }
-  nav ul { list-style: none; display: flex; gap: 28px; }
-  nav ul a {
-    color: var(--ink-mid);
-    font-size: 14px;
-    font-weight: 500;
-  }
-  nav ul a:hover { color: var(--accent); text-decoration: none; }
-
-  /* ─────── HERO ─────── */
-  .hero {
-    position: relative;
-    padding: 0;
-    overflow: hidden;
-    background: var(--bg-alt);
-    border-bottom: 1px solid var(--line);
-  }
-  .hero-banner {
-    position: relative;
-    height: 280px;
-    overflow: hidden;
-    background: #0a0e1a;
-  }
-  .hero-banner img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    opacity: 0.55;
-  }
-  .hero-banner::after {
-    content: "";
-    position: absolute; inset: 0;
-    background: linear-gradient(180deg,
-      rgba(20,33,61,0.35) 0%,
-      rgba(20,33,61,0.55) 50%,
-      rgba(246,247,249,1) 100%);
-  }
-  .hero-banner-label {
-    position: absolute;
-    top: 24px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2;
-    font-family: var(--sans);
-    font-size: 11px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.85);
-    background: rgba(193, 68, 14, 0.85);
-    padding: 6px 14px;
-    border-radius: 2px;
-  }
-
-  .hero-content {
-    position: relative;
-    margin-top: -80px;
-    padding-bottom: 60px;
-    z-index: 3;
-  }
-  .hero-card {
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    gap: 32px;
-    background: #fff;
-    padding: 32px;
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    box-shadow: 0 8px 32px rgba(20, 33, 61, 0.08);
-    align-items: center;
-  }
-  .hero-photo {
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 4px solid #fff;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-  }
-  .hero-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .hero-text h1 {
-    font-family: var(--serif);
-    font-size: clamp(28px, 4vw, 40px);
-    font-weight: 600;
-    line-height: 1.15;
-    color: var(--ink);
-    margin-bottom: 8px;
-    letter-spacing: -0.01em;
-  }
-  .hero-text .role {
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: 17px;
-    color: var(--accent);
-    margin-bottom: 14px;
-  }
-  .hero-text .affil {
-    font-size: 15px;
-    color: var(--ink-mid);
-    margin-bottom: 18px;
-    line-height: 1.5;
-  }
-  .hero-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  .hero-links a {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 7px 14px;
-    background: var(--bg-alt);
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--ink-mid);
-    transition: all 0.15s ease;
-  }
-  .hero-links a:hover {
-    background: var(--accent-soft);
-    border-color: var(--accent);
-    color: var(--accent);
-    text-decoration: none;
-  }
-
-  /* ─────── SECTIONS ─────── */
-  section {
-    padding: 70px 0;
-  }
-  section + section { border-top: 1px solid var(--line); }
-
-  .section-title {
-    font-family: var(--serif);
-    font-size: 28px;
-    font-weight: 600;
-    color: var(--ink);
-    margin-bottom: 8px;
-    letter-spacing: -0.01em;
-  }
-  .section-sub {
-    font-size: 14px;
-    color: var(--ink-soft);
-    margin-bottom: 36px;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    font-weight: 500;
-  }
-
-  /* ─────── ABOUT ─────── */
-  .about p {
-    font-size: 16px;
-    line-height: 1.75;
-    color: var(--ink-mid);
-    margin-bottom: 16px;
-    max-width: 780px;
-  }
-  .about p strong { color: var(--ink); font-weight: 600; }
-
-  .interest-tags {
-    margin-top: 24px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  .interest-tags span {
-    font-size: 12px;
-    font-weight: 500;
-    padding: 5px 12px;
-    background: var(--bg-alt);
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    color: var(--ink-mid);
-  }
-
-  /* ─────── PUBLICATIONS — small card grid with images ─────── */
-  .pub-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 22px;
-  }
-  .pub-card {
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    overflow: hidden;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-    display: flex;
-    flex-direction: column;
-  }
-  .pub-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 28px rgba(20, 33, 61, 0.10);
-    border-color: var(--accent);
-  }
-  .pub-thumb {
-    width: 100%;
-    aspect-ratio: 16/10;
-    background: var(--bg-alt);
-    overflow: hidden;
-    border-bottom: 1px solid var(--line);
-  }
-  .pub-thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    transition: transform 0.4s ease;
-  }
-  .pub-card:hover .pub-thumb img { transform: scale(1.04); }
-
-  .pub-body {
-    padding: 18px 20px 20px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  .pub-journal {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 6px;
-  }
-  .pub-journal .year { color: var(--ink-soft); font-weight: 500; }
-  .pub-card h3 {
-    font-family: var(--serif);
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 1.35;
-    color: var(--ink);
-    margin-bottom: 10px;
-  }
-  .pub-desc {
-    font-size: 13.5px;
-    line-height: 1.55;
-    color: var(--ink-mid);
-    margin-bottom: 14px;
-    flex: 1;
-  }
-  .pub-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-top: auto;
-  }
-  .pub-link:hover { gap: 10px; text-decoration: none; }
-  .pub-link::after { content: "→"; }
-
-  .pub-card.featured {
-    grid-column: span 1;
-    position: relative;
-  }
-  .pub-card.featured .pub-thumb::before {
-    content: "Featured · Global Media Coverage";
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background: var(--accent);
-    color: #fff;
-    font-size: 10px;
-    font-weight: 600;
-    padding: 4px 10px;
-    border-radius: 3px;
-    letter-spacing: 0.05em;
-    z-index: 2;
-  }
-  .pub-thumb { position: relative; }
-
-  /* ─────── TOOLS ─────── */
-  .tool-card {
-    display: grid;
-    grid-template-columns: 240px 1fr;
-    gap: 36px;
-    align-items: center;
-    padding: 30px 34px;
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    box-shadow: 0 8px 32px rgba(20, 33, 61, 0.06);
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  }
-  .tool-card:hover {
-    border-color: var(--accent);
-    box-shadow: 0 14px 36px rgba(20, 33, 61, 0.11);
-  }
-  .tool-figure {
-    width: 100%;
-    background: #f4f9fb;
-    border: 1px solid #dfeaee;
-    border-radius: 4px;
-    padding: 10px;
-  }
-  .tool-figure svg { width: 100%; height: auto; display: block; }
-  .pulse-ring { animation: pulse 2.6s cubic-bezier(0.4, 0, 0.2, 1) infinite; transform-origin: 110px 100px; }
-  @keyframes pulse {
-    0%   { r: 10; opacity: 0.55; }
-    100% { r: 74; opacity: 0; }
-  }
-  .tool-kicker {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 8px;
-  }
-  .tool-body h3 {
-    font-family: var(--serif);
-    font-size: 21px;
-    font-weight: 600;
-    line-height: 1.3;
-    color: var(--ink);
-    margin-bottom: 10px;
-  }
-  .tool-body p {
-    font-size: 15px;
-    line-height: 1.7;
-    color: var(--ink-mid);
-    margin-bottom: 14px;
-    max-width: 62ch;
-  }
-  .tool-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-    margin-bottom: 20px;
-  }
-  .tool-meta span {
-    font-size: 11.5px;
-    font-weight: 500;
-    padding: 4px 11px;
-    background: var(--bg-alt);
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    color: var(--ink-mid);
-  }
-  .tool-open {
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-    padding: 11px 20px;
-    background: var(--accent);
-    color: #fff;
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 0.01em;
-    transition: filter 0.15s ease, transform 0.15s ease;
-  }
-  .tool-open:hover { filter: brightness(1.1); transform: translateY(-1px); text-decoration: none; }
-  .tool-open:focus-visible { outline: 3px solid #efb135; outline-offset: 3px; }
-  .tool-note {
-    margin-top: 18px;
-    font-size: 13px;
-    line-height: 1.65;
-    color: var(--ink-soft);
-    max-width: 780px;
-  }
-
-  /* ─────── EDUCATION ─────── */
-  .edu-list {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
-  .edu-item {
-    display: grid;
-    grid-template-columns: 130px 1fr;
-    gap: 24px;
-    padding: 20px 0;
-    border-bottom: 1px solid var(--line);
-    align-items: baseline;
-  }
-  .edu-item:last-child { border-bottom: none; }
-  .edu-year {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--ink-soft);
-    letter-spacing: 0.03em;
-  }
-  .edu-detail h4 {
-    font-family: var(--serif);
-    font-size: 17px;
-    font-weight: 600;
-    margin-bottom: 4px;
-    color: var(--ink);
-  }
-  .edu-detail p {
-    font-size: 14px;
-    color: var(--ink-mid);
-  }
-  .edu-detail em {
-    color: var(--accent);
-    font-style: normal;
-    font-weight: 500;
-  }
-
-  /* ─────── CONTACT ─────── */
-  .contact {
-    background: var(--bg-alt);
-    text-align: center;
-    padding: 80px 0;
-    border-top: 1px solid var(--line);
-  }
-  .contact h2 {
-    font-family: var(--serif);
-    font-size: 32px;
-    font-weight: 600;
-    color: var(--ink);
-    margin-bottom: 16px;
-  }
-  .contact p {
-    font-size: 16px;
-    color: var(--ink-mid);
-    max-width: 520px;
-    margin: 0 auto 28px;
-  }
-  .contact-email {
-    display: inline-block;
-    font-family: var(--serif);
-    font-size: 22px;
-    color: var(--accent);
-    font-weight: 500;
-    border-bottom: 2px solid var(--accent);
-    padding-bottom: 3px;
-  }
-  .contact-email:hover { text-decoration: none; opacity: 0.75; }
-  .social-row {
-    margin-top: 28px;
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  .social-row a {
-    font-size: 13px;
-    font-weight: 500;
-    padding: 8px 16px;
-    background: #fff;
-    border: 1px solid var(--line);
-    color: var(--ink-mid);
-    border-radius: 999px;
-    transition: all 0.15s ease;
-  }
-  .social-row a:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    text-decoration: none;
-  }
-
-  /* ─────── FOOTER ─────── */
-  footer {
-    padding: 24px 0;
-    background: #fff;
-    border-top: 1px solid var(--line);
-    font-size: 13px;
-    color: var(--ink-soft);
-    text-align: center;
-  }
-
-  /* ─────── RESPONSIVE ─────── */
-  @media (max-width: 720px) {
-    .hero-banner { height: 200px; }
-    .hero-content { margin-top: -60px; }
-    .hero-card {
-      grid-template-columns: 1fr;
-      text-align: center;
-      gap: 20px;
-      padding: 24px 20px;
-    }
-    .hero-photo { margin: 0 auto; width: 140px; height: 140px; }
-    .hero-links { justify-content: center; }
-    section { padding: 50px 0; }
-    .section-title { font-size: 24px; }
-    nav ul { gap: 16px; }
-    nav ul a { font-size: 13px; }
-    .edu-item { grid-template-columns: 1fr; gap: 6px; }
-    .tool-card { grid-template-columns: 1fr; gap: 22px; padding: 22px 20px; }
-    .tool-figure { max-width: 260px; margin: 0 auto; }
-  }
-
-  /* ─────── ANIMATIONS ─────── */
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .hero-card { animation: fadeIn 0.7s ease-out both; }
-  .pub-card { animation: fadeIn 0.6s ease-out both; }
-  .pub-card:nth-child(1) { animation-delay: 0.05s; }
-  .pub-card:nth-child(2) { animation-delay: 0.15s; }
-  .pub-card:nth-child(3) { animation-delay: 0.25s; }
-  .pub-card:nth-child(4) { animation-delay: 0.35s; }
-
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    .hero-card, .pub-card { animation: none; }
-    .pulse-ring { animation: none; opacity: 0.3; }
-    .tool-open:hover { transform: none; }
-  }
-</style>
+<!-- Visitor counting. Replace YOURCODE with your GoatCounter site code, or delete these two lines. -->
+<script data-goatcounter="https://YOURCODE.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
 
-<!-- ───────── NAV ───────── -->
 <nav>
   <div class="container">
-    <div class="brand">M. Mohammadnia</div>
+    <a class="brand" href="./">M. Mohammadnia</a>
     <ul>
       <li><a href="#about">About</a></li>
-      <li><a href="#publications">Publications</a></li>
+      <li><a href="#sites">Field sites</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="research/cmf.html">CMF method</a></li>
       <li><a href="#tools">Tools</a></li>
-      <li><a href="#education">Education</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a class="cta" href="cv.html">CV</a></li>
     </ul>
   </div>
 </nav>
 
 <!-- ───────── HERO ───────── -->
 <section class="hero">
-  <!-- Title banner with InSAR/volcano imagery -->
   <div class="hero-banner">
     <span class="hero-banner-label">InSAR · Volcano Geodesy</span>
-    <img src="images/hero.jpg" alt="InSAR deformation maps of Sierra Negra volcano showing rainbow-colored uplift patterns" />
+    <img src="images/hero.jpg" alt="InSAR deformation maps of Sierra Negra volcano showing rainbow-coloured uplift patterns" />
   </div>
 
-  <!-- Main card with photo + name -->
   <div class="hero-content">
     <div class="container">
       <div class="hero-card">
@@ -610,17 +91,19 @@
         </div>
         <div class="hero-text">
           <h1>Mohammadhossein Mohammadnia</h1>
-          <div class="role">PhD Researcher · Earth Sciences</div>
+          <div class="role">PhD, Earth Sciences · Solid-Earth Geodesy</div>
           <div class="affil">
             Department of Earth Sciences, The University of Hong Kong<br>
-            Advised by Dr. Pablo J. González (CSIC) &amp; Prof. Alex Webb (FU Berlin)
+            Advised by Dr. Pablo J. González (IPNA-CSIC) &amp; Prof. Alex Webb (Freie Universität Berlin)
           </div>
           <div class="hero-links">
+            <a class="primary" href="cv.html">Curriculum vitae</a>
             <a href="mailto:mh.mohammadnia1@gmail.com">✉ Email</a>
+            <a href="https://orcid.org/0009-0000-2193-2980" target="_blank" rel="noopener">ORCID</a>
             <a href="https://scholar.google.com/citations?user=CLB8v-cAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>
             <a href="https://www.researchgate.net/profile/Mohammadhosein-Mohammadnia" target="_blank" rel="noopener">ResearchGate</a>
-            <a href="https://github.com/mhmnia" target="_blank" rel="noopener">GitHub</a>
-            <a href="https://twitter.com/nirvana2462" target="_blank" rel="noopener">Twitter</a>
+            <a href="https://github.com/mohammadnia11" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://twitter.com/nirvana2462" target="_blank" rel="noopener">Twitter / X</a>
           </div>
         </div>
       </div>
@@ -634,20 +117,53 @@
     <div class="section-sub">About</div>
     <h2 class="section-title">Measuring how the ground moves, from space.</h2>
 
-    <p>I am a PhD researcher at the <strong>University of Hong Kong</strong>, working at the intersection of satellite remote sensing and solid-earth geophysics. My research uses <strong>Interferometric Synthetic Aperture Radar (InSAR)</strong> to detect and interpret subtle ground deformation — uncovering hidden volcanic unrest, mapping rising salt diapirs, and tracking eruptions as they unfold.</p>
+    <p>I am a solid-Earth geodesist working at the intersection of satellite remote sensing and geophysics. My research uses <strong>Interferometric Synthetic Aperture Radar (InSAR)</strong> to detect and interpret ground deformation of a few millimetres per year — enough to reveal unrest at volcanoes nobody is watching, to track salt rising through a desert basin, and to follow an eruption as it unfolds.</p>
 
-    <p>I develop new processing methods to push InSAR sensitivity beyond conventional limits, with particular focus on <strong>atmospheric correction</strong> for small, steep volcanic edifices. I combine these geodetic observations with <strong>numerical modeling</strong>, petrological constraints, and machine learning to reconstruct subsurface processes from millimeter-scale surface signals.</p>
+    <p>Much of that signal is buried in atmospheric noise, so I build methods to dig it out. The <a href="research/cmf.html">common-mode filtering (CMF)</a> algorithm came out of this work: an open-source correction for small, steep volcanic edifices where global weather models are too coarse to help. I then combine the corrected geodesy with <strong>Bayesian source inversion</strong>, thermodynamic and petrological constraints, and machine learning to work back from a surface signal to the process that produced it.</p>
 
-    <p>My recent work on Taftan volcano (Iran) — the first clear unrest signal captured at a long-dormant volcano — received <strong>global media coverage</strong> in <em>The Independent</em>, <em>New York Post</em>, <em>Daily Mail</em>, and other outlets.</p>
+    <p>My study of Taftan volcano in Iran — the first documented unrest at a volcano dormant for some 700,000 years — was <a href="#press">covered by news outlets worldwide</a> in October 2025.</p>
 
     <div class="interest-tags">
-      <span>InSAR Time Series</span>
-      <span>Volcano Geodesy</span>
-      <span>Atmospheric Correction</span>
-      <span>Numerical Modeling</span>
-      <span>Salt Tectonics</span>
-      <span>Pixel Offset Tracking</span>
-      <span>Machine Learning</span>
+      <span>InSAR time series</span>
+      <span>Volcano geodesy</span>
+      <span>Atmospheric correction</span>
+      <span>Bayesian source inversion</span>
+      <span>Pixel-offset tracking</span>
+      <span>Salt tectonics</span>
+      <span>Machine learning</span>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── FIELD SITES MAP ───────── -->
+<section id="sites">
+  <div class="container">
+    <div class="section-sub">Field sites</div>
+    <h2 class="section-title">Where the work has taken me.</h2>
+    <p class="section-lead">Eight sites across four continents, from an arc volcano on the Iran–Pakistan border to glaciers above the Arctic Circle. Click a marker to read what the study found.</p>
+
+    <div class="mapwrap">
+      <div>
+        <div class="mapstage" id="stage">
+          <div class="maptiles" id="tiles"></div>
+          <div class="mappins" id="pins"></div>
+          <div class="mapzoom">
+            <button id="zin" type="button" aria-label="Zoom in">+</button>
+            <button id="zout" type="button" aria-label="Zoom out">−</button>
+          </div>
+          <div class="maplegend">
+            <span><i class="pub"></i>Published</span>
+            <span><i class="prog"></i>In progress</span>
+            <span><i class="past"></i>Earlier work</span>
+          </div>
+        </div>
+        <p class="mapcredit" id="mapcredit">Drag to pan. Basemap: Esri World Imagery. Markers show approximate site locations.</p>
+      </div>
+      <aside class="sitecard" id="sitecard">
+        <span class="status">Start here</span>
+        <h3>Pick a site on the map</h3>
+        <p class="hint">Each marker opens a short summary of the study, the method used, and a link to the paper where one exists.</p>
+      </aside>
     </div>
   </div>
 </section>
@@ -655,38 +171,35 @@
 <!-- ───────── PUBLICATIONS ───────── -->
 <section id="publications">
   <div class="container">
-    <div class="section-sub">Selected Publications</div>
+    <div class="section-sub">Selected publications</div>
     <h2 class="section-title">Peer-reviewed research, 2021 – 2026.</h2>
 
     <div class="pub-grid">
 
-      <!-- Taftan -->
       <article class="pub-card featured">
         <div class="pub-thumb">
-          <img src="images/taftan.jpg" alt="InSAR ascending/descending velocity maps of Taftan volcano summit uplift" />
+          <img src="images/taftan.jpg" alt="InSAR ascending and descending velocity maps of Taftan volcano summit uplift" />
         </div>
         <div class="pub-body">
           <div class="pub-journal">Geophysical Research Letters <span class="year">· 2025</span></div>
           <h3>Spontaneous transient summit uplift at Taftan volcano, Iran</h3>
-          <p class="pub-desc">First clear unrest signal at a long-dormant volcano along the Makran subduction arc. A novel common-mode filtering technique reveals a 10-month, ~9 cm uplift episode sourced ~500 m beneath the summit.</p>
+          <p class="pub-desc">First documented unrest at a long-dormant volcano on the Makran subduction arc. Common-mode filtering resolves a 10-month, ~9 cm uplift episode sourced 490–630 m beneath the summit, with no earthquake to trigger it.</p>
           <a class="pub-link" href="https://doi.org/10.1029/2025GL114853" target="_blank" rel="noopener">Read paper</a>
         </div>
       </article>
 
-      <!-- Tibesti -->
       <article class="pub-card">
         <div class="pub-thumb">
-          <img src="images/tibesti.jpg" alt="Sentinel-1 LOS velocity map of the Tibesti volcanic province in Chad" />
+          <img src="images/tibesti.jpg" alt="Sentinel-1 line-of-sight velocity map of the Tibesti volcanic province in Chad" />
         </div>
         <div class="pub-body">
           <div class="pub-journal">Bulletin of Volcanology <span class="year">· 2026</span></div>
           <h3>Active magmatic processes at the Tibesti intraplate volcanoes</h3>
-          <p class="pub-desc">First satellite-based deformation survey of the Tibesti province in the central Sahara. Persistent subsidence at Toussidé–Yirrigué and Soborom points to long-term cooling of mid-crustal magma reservoirs.</p>
+          <p class="pub-desc">The first province-wide deformation baseline for a 29,000 km² volcanic province in the central Sahara. Steady subsidence at Toussidé–Yirrigué and Soborom traces back to magma reservoirs cooling and degassing since the Holocene.</p>
           <a class="pub-link" href="https://doi.org/10.1007/s00445-026-01954-0" target="_blank" rel="noopener">Read paper</a>
         </div>
       </article>
 
-      <!-- Sierra Negra -->
       <article class="pub-card">
         <div class="pub-thumb">
           <img src="images/sierra.jpg" alt="Sierra Negra eruption displacement maps from InSAR and pixel offset tracking" />
@@ -694,12 +207,11 @@
         <div class="pub-body">
           <div class="pub-journal">Geophysical Journal International <span class="year">· 2025</span></div>
           <h3>Surface deformation dynamics of Sierra Negra's 2018 eruption</h3>
-          <p class="pub-desc">Multi-method study combining InSAR, optical flow, and pixel offset tracking on 6-day Sentinel-1 pairs. Recovers the full eruption cycle and estimates underground magma transfer at ~60 m/hr.</p>
+          <p class="pub-desc">InSAR, optical flow and pixel-offset tracking on six-day Sentinel-1 pairs recover the full eruption cycle, and a single one-day offset pair yields a magma transfer rate of roughly 60 m per hour.</p>
           <a class="pub-link" href="https://doi.org/10.1093/gji/ggaf012" target="_blank" rel="noopener">Read paper</a>
         </div>
       </article>
 
-      <!-- Salt diapirs -->
       <article class="pub-card">
         <div class="pub-thumb">
           <img src="images/salt.jpg" alt="Geological map of salt diapirs in the Kalut basin, central Iran" />
@@ -707,11 +219,17 @@
         <div class="pub-body">
           <div class="pub-journal">Tectonophysics <span class="year">· 2021</span></div>
           <h3>Active deformation of salt diapirs in the Kalut basin, Iran</h3>
-          <p class="pub-desc">InSAR study of eight salt diapirs in central Iran — one of the most active exposed diapiric systems on Earth. Salt stocks and walls rise at up to 8 mm/yr, with horizontal spread of 1–2 mm/yr along their flanks.</p>
+          <p class="pub-desc">Eight salt diapirs surveyed from 724 interferograms — one of the first InSAR studies to cover an entire diapiric basin. Stocks and walls rise at up to 8 mm/yr and spread sideways at 1–2 mm/yr.</p>
           <a class="pub-link" href="https://doi.org/10.1016/j.tecto.2021.228860" target="_blank" rel="noopener">Read paper</a>
         </div>
       </article>
 
+    </div>
+
+    <div class="more-row">
+      <a class="btn" href="publications.html">Full publication list</a>
+      <a class="btn ghost" href="files/mohammadnia.bib" download>Download BibTeX</a>
+      <a class="btn ghost" href="https://scholar.google.com/citations?user=CLB8v-cAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>
     </div>
   </div>
 </section>
@@ -719,25 +237,21 @@
 <!-- ───────── TOOLS ───────── -->
 <section id="tools">
   <div class="container">
-    <div class="section-sub">Open Tools</div>
+    <div class="section-sub">Open tools</div>
     <h2 class="section-title">Things you can run in the browser.</h2>
 
     <article class="tool-card">
       <div class="tool-figure">
-        <!-- Schematic: epicentre at centre, search radius, volcanoes inside and outside -->
-        <svg viewBox="0 0 220 200" role="img" aria-label="Schematic of a search radius around an earthquake epicentre with volcanoes marked inside and outside the circle">
+        <svg viewBox="0 0 220 200" role="img" aria-label="A search radius drawn around an earthquake epicentre, with volcanoes marked inside and outside the circle">
           <circle class="pulse-ring" cx="110" cy="100" r="10" fill="none" stroke="#c1440e" stroke-width="2" />
           <circle cx="110" cy="100" r="74" fill="rgba(18,129,148,0.06)" stroke="#128194" stroke-width="1.6" stroke-dasharray="7 6" />
           <line x1="110" y1="100" x2="110" y2="26" stroke="#9fb8c0" stroke-width="1" />
           <text x="115" y="66" font-family="Inter, sans-serif" font-size="10" fill="#5e7480">500 km</text>
-          <!-- volcanoes inside the radius -->
           <path d="M64 84 L57 98 L71 98 Z" fill="#c93626" />
           <path d="M104 52 L98 65 L110 65 Z" fill="#e28217" />
           <path d="M146 118 L140 131 L152 131 Z" fill="#137b8b" />
           <path d="M92 140 L86 153 L98 153 Z" fill="#7a4fa3" />
-          <!-- volcano outside the radius -->
           <path d="M196 62 L190 75 L202 75 Z" fill="#b8c4c9" />
-          <!-- epicentre -->
           <circle cx="110" cy="100" r="7" fill="#14213d" stroke="#fff" stroke-width="2" />
         </svg>
       </div>
@@ -745,25 +259,106 @@
       <div class="tool-body">
         <div class="tool-kicker">Interactive · runs entirely in your browser</div>
         <h3>Earthquake–Volcano Proximity Explorer</h3>
-        <p>Pick a time window and a magnitude threshold, load the USGS catalogue, then click any earthquake. The tool lists every Smithsonian GVP Holocene volcano inside your chosen radius, with distance, azimuth and last known eruption, on a schematic plot and an optional satellite basemap.</p>
+        <p>Pick a time window and a magnitude threshold, load the USGS catalogue, then click any earthquake. The tool lists every Smithsonian GVP Holocene volcano inside your chosen radius with its distance, azimuth and last known eruption, on a schematic plot and an optional satellite basemap. Built for screening which volcanoes are worth checking after a large earthquake.</p>
         <div class="tool-meta">
           <span>USGS FDSN events</span>
           <span>GVP Holocene catalogue</span>
           <span>Distance &amp; azimuth table</span>
           <span>Satellite basemap</span>
         </div>
-        <a class="tool-open" href="tools/eq-volcano-explorer/">Open the explorer →</a>
+        <a class="btn" href="/eq-volcano-explorer/">Open the explorer →</a>
       </div>
     </article>
 
-    <p class="tool-note">The volcano catalogue is bundled with the page, so the tool works as soon as it opens. You can also load a newer GVP export of your own; the file is read in your browser and is never sent anywhere. Proximity is spatial context only — a volcano inside the radius does not by itself imply earthquake-triggered activity.</p>
+    <article class="tool-card">
+      <div class="tool-figure">
+        <svg viewBox="0 0 220 200" role="img" aria-label="A time series with a noisy grey line and a smoother filtered orange line">
+          <line x1="20" y1="160" x2="205" y2="160" stroke="#9fb8c0" stroke-width="1.2" />
+          <line x1="20" y1="30" x2="20" y2="160" stroke="#9fb8c0" stroke-width="1.2" />
+          <polyline fill="none" stroke="#b8c4c9" stroke-width="2"
+            points="24,118 40,74 54,132 68,66 84,124 98,78 114,130 128,70 144,120 158,80 174,126 190,72 202,110" />
+          <polyline fill="none" stroke="#c1440e" stroke-width="2.6" stroke-linecap="round"
+            points="24,112 44,107 64,103 84,99 104,94 124,88 144,79 164,70 184,62 202,58" />
+          <text x="28" y="46" font-family="Inter, sans-serif" font-size="10" fill="#5e7480">raw</text>
+          <text x="150" y="50" font-family="Inter, sans-serif" font-size="10" fill="#c1440e">filtered</text>
+        </svg>
+      </div>
+
+      <div class="tool-body">
+        <div class="tool-kicker">Open source · peer reviewed</div>
+        <h3>Common-Mode Filtering (CMF) for InSAR time series</h3>
+        <p>A data-driven atmospheric correction for volcanoes too small for global weather models to resolve. It estimates the noise shared across a reference ring of pixels and removes it from the target, cutting time-series scatter by about 36% on its own and by up to 50% alongside an ERA5 correction. Designed to slot into MintPy, StaMPS and LiCSBAS workflows.</p>
+        <div class="tool-meta">
+          <span>Python</span>
+          <span>MintPy / StaMPS / LiCSBAS</span>
+          <span>GPL-3.0</span>
+        </div>
+        <div class="more-row" style="margin-top:0">
+          <a class="btn" href="research/cmf.html">How the method works</a>
+          <a class="btn ghost" href="https://github.com/mohammadnia11/Common-Mode-Filtering-CMF-" target="_blank" rel="noopener">Code on GitHub</a>
+          <a class="doi-badge" href="https://doi.org/10.5281/zenodo.14629139" target="_blank" rel="noopener">DOI <b>10.5281/zenodo.14629139</b></a>
+        </div>
+      </div>
+    </article>
+
+    <p class="tool-note">Both tools are free to use and free to reuse. The explorer's volcano catalogue is bundled with the page and can be swapped for a newer export at any time; nothing you load is sent to a server. Proximity is spatial context only — a volcano inside the radius does not by itself imply earthquake-triggered activity.</p>
+  </div>
+</section>
+
+<!-- ───────── PRESS ───────── -->
+<section id="press">
+  <div class="container">
+    <div class="section-sub">In the news</div>
+    <h2 class="section-title">Taftan, October 2025.</h2>
+    <p class="press-lede">The Taftan study reached general audiences across Europe, North America and the Middle East. What travelled furthest was not the method but its consequence: a volcano widely assumed to be extinct is measurably moving, and the Makran arc has no permanent monitoring network.</p>
+
+    <div class="press-grid">
+      <a class="press-item" href="https://www.livescience.com/planet-earth/volcanos/an-iranian-volcano-appears-to-have-woken-up-700-000-years-after-its-last-eruption" target="_blank" rel="noopener">
+        <span class="press-outlet">Live Science</span>
+        <span class="press-title">An Iranian volcano appears to have woken up 700,000 years after its last eruption</span>
+        <span class="press-date">Oct 2025</span>
+      </a>
+      <a class="press-item" href="https://www.independent.co.uk/news/world/middle-east/volcano-iran-pakistan-taftan-eruption-b2850122.html" target="_blank" rel="noopener">
+        <span class="press-outlet">The Independent</span>
+        <span class="press-title">Volcano on the Iran–Pakistan border shows signs of reawakening</span>
+        <span class="press-date">Oct 2025</span>
+      </a>
+      <a class="press-item" href="https://nypost.com/2025/10/20/science/an-iranian-volcano-is-showing-signs-of-activity-more-than-700000-years-after-its-last-eruption/" target="_blank" rel="noopener">
+        <span class="press-outlet">New York Post</span>
+        <span class="press-title">An Iranian volcano is showing signs of activity more than 700,000 years after its last eruption</span>
+        <span class="press-date">20 Oct 2025</span>
+      </a>
+      <a class="press-item" href="https://www.dailymail.co.uk/sciencetech/article-15199891/volcano-shows-signs-eruption-iran.html" target="_blank" rel="noopener">
+        <span class="press-outlet">Daily Mail</span>
+        <span class="press-title">Volcano shows signs of a possible eruption in Iran</span>
+        <span class="press-date">Oct 2025</span>
+      </a>
+      <a class="press-item" href="https://www.earth.com/news/dormant-volcano-taftan-southeastern-iran-wakes-up-after-700000-years-silence/" target="_blank" rel="noopener">
+        <span class="press-outlet">Earth.com</span>
+        <span class="press-title">Dormant volcano in southeastern Iran wakes up after 700,000 years of silence</span>
+        <span class="press-date">Oct 2025</span>
+      </a>
+      <a class="press-item" href="https://watchers.news/epicenter/taftan-volcano-reawakens-after-710-000-years-of-sleep-revealing-hidden-hazards/" target="_blank" rel="noopener">
+        <span class="press-outlet">The Watchers</span>
+        <span class="press-title">Taftan volcano reawakens after 710,000 years of sleep, revealing hidden hazards</span>
+        <span class="press-date">20 Oct 2025</span>
+      </a>
+    </div>
+
+    <p class="press-also">
+      Also covered by
+      <a href="https://uk.news.yahoo.com/scientists-fear-volcano-extinct-700-083948327.html" target="_blank" rel="noopener">Yahoo News</a>,
+      <a href="https://www.zmescience.com/science/news-science/an-iranian-volcano-appears-to-have-woken-up-700000-years-after-its-last-eruption/" target="_blank" rel="noopener">ZME Science</a>,
+      <a href="https://www.thebrighterside.news/post/after-700000-years-irans-dormant-taftan-volcano-is-starting-to-rise/" target="_blank" rel="noopener">The Brighter Side of News</a>,
+      <em>Illustreret Videnskab</em> (Denmark) and <em>bulletin</em> (UK).
+    </p>
   </div>
 </section>
 
 <!-- ───────── EDUCATION ───────── -->
 <section id="education">
   <div class="container">
-    <div class="section-sub">Education &amp; Experience</div>
+    <div class="section-sub">Education &amp; experience</div>
     <h2 class="section-title">Academic background.</h2>
 
     <div class="edu-list">
@@ -774,7 +369,13 @@
           <p>The University of Hong Kong &nbsp;·&nbsp; <em>HKU Postgraduate Scholarship</em></p>
         </div>
       </div>
-
+      <div class="edu-item">
+        <div class="edu-year">2026</div>
+        <div class="edu-detail">
+          <h4>Research Associate</h4>
+          <p>Department of Earth Sciences, The University of Hong Kong &nbsp;·&nbsp; <em>Geocoded-SLC processing workflows</em></p>
+        </div>
+      </div>
       <div class="edu-item">
         <div class="edu-year">2019</div>
         <div class="edu-detail">
@@ -782,22 +383,25 @@
           <p>Stockholm University &nbsp;·&nbsp; <em>Bolin Centre for Climate Research</em></p>
         </div>
       </div>
-
       <div class="edu-item">
         <div class="edu-year">2016 — 2019</div>
         <div class="edu-detail">
           <h4>MSc, Geophysics</h4>
-          <p>Institute for Advanced Studies in Basic Sciences (IASBS), Zanjan, Iran &nbsp;·&nbsp; <em>Rank 1 in class</em></p>
+          <p>Institute for Advanced Studies in Basic Sciences (IASBS), Zanjan, Iran &nbsp;·&nbsp; <em>Ranked first in class</em></p>
         </div>
       </div>
-
       <div class="edu-item">
         <div class="edu-year">2011 — 2014</div>
         <div class="edu-detail">
           <h4>BSc, Physics</h4>
-          <p>Shahid Madani University of Azerbaijan, Tabriz, Iran</p>
+          <p>Azarbaijan Shahid Madani University, Tabriz, Iran</p>
         </div>
       </div>
+    </div>
+
+    <div class="more-row">
+      <a class="btn" href="cv.html">Full CV</a>
+      <a class="btn ghost" href="files/Mohammadnia_CV_2026-08.pdf" download>Download CV (PDF)</a>
     </div>
   </div>
 </section>
@@ -806,12 +410,13 @@
 <section id="contact" class="contact">
   <div class="container">
     <h2>Get in touch</h2>
-    <p>I'm always glad to discuss research, collaborations, or new ideas in volcano geodesy and InSAR.</p>
+    <p>I am glad to talk about research, collaborations, or new ideas in volcano geodesy and InSAR.</p>
     <a class="contact-email" href="mailto:mh.mohammadnia1@gmail.com">mh.mohammadnia1@gmail.com</a>
     <div class="social-row">
+      <a href="https://orcid.org/0009-0000-2193-2980" target="_blank" rel="noopener">ORCID</a>
       <a href="https://scholar.google.com/citations?user=CLB8v-cAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>
       <a href="https://www.researchgate.net/profile/Mohammadhosein-Mohammadnia" target="_blank" rel="noopener">ResearchGate</a>
-      <a href="https://github.com/mhmnia" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/mohammadnia11" target="_blank" rel="noopener">GitHub</a>
       <a href="https://twitter.com/nirvana2462" target="_blank" rel="noopener">Twitter / X</a>
     </div>
   </div>
@@ -819,9 +424,198 @@
 
 <footer>
   <div class="container">
-    © 2026 Mohammadhossein Mohammadnia · The University of Hong Kong
+    © 2026 Mohammadhossein Mohammadnia ·
+    <a href="https://orcid.org/0009-0000-2193-2980" target="_blank" rel="noopener">ORCID 0009-0000-2193-2980</a>
   </div>
 </footer>
+
+<script>
+/* ============ Field-sites map: Web Mercator tiles + markers ============ */
+(function () {
+  var SITES = [
+    { name: "Taftan volcano", where: "Makran arc, southeastern Iran", lat: 28.60, lon: 61.13,
+      state: "published", label: "Published · GRL 2025", img: "images/taftan.jpg",
+      alt: "InSAR velocity maps of Taftan volcano",
+      text: "A volcano with no dated eruption for roughly 700,000 years, and no monitoring network. Common-mode filtering pulled a 10-month, ~9 cm summit uplift out of the atmospheric noise, sourced 490–630 m below the summit and starting without any earthquake to set it off.",
+      ref: "Mohammadnia et al. (2025), <em>Geophysical Research Letters</em>", doi: "https://doi.org/10.1029/2025GL114853" },
+
+    { name: "Tibesti Volcanic Province", where: "Central Sahara, northern Chad", lat: 21.04, lon: 16.47,
+      state: "published", label: "Published · Bull. Volcanol. 2026", img: "images/tibesti.jpg",
+      alt: "Sentinel-1 velocity map of the Tibesti volcanic province",
+      text: "The first deformation baseline for a 29,000 km² province, built from three descending Sentinel-1 frames across eight volcanic centres. Toussidé–Yirrigué subsides at 2.2 mm/yr and Soborom at 8.5 mm/yr, matching magma reservoirs that are cooling and degassing rather than refilling.",
+      ref: "Mohammadnia et al. (2026), <em>Bulletin of Volcanology</em>", doi: "https://doi.org/10.1007/s00445-026-01954-0" },
+
+    { name: "Sierra Negra", where: "Isabela Island, Galápagos, Ecuador", lat: -0.83, lon: -91.17,
+      state: "published", label: "Published · GJI 2025", img: "images/sierra.jpg",
+      alt: "Sierra Negra eruption displacement maps",
+      text: "The 2018 eruption caught across three methods at once — InSAR, optical flow and pixel-offset tracking on six-day pairs. A single one-day ascending–descending offset pair puts magma moving underground at roughly 60 m per hour.",
+      ref: "Mohammadnia et al. (2025), <em>Geophysical Journal International</em>", doi: "https://doi.org/10.1093/gji/ggaf012" },
+
+    { name: "Kalut basin salt diapirs", where: "Lut desert, central Iran", lat: 30.35, lon: 58.00,
+      state: "published", label: "Published · Tectonophysics 2021", img: "images/salt.jpg",
+      alt: "Geological map of salt diapirs in the Kalut basin",
+      text: "137 Sentinel-1 scenes and 724 interferograms covering eight diapirs — an entire diapiric province rather than a single structure. Salt rises at up to 8 mm/yr, and walls, stocks, massifs and welds each turn out to have their own kinematic signature.",
+      ref: "Mohammadnia et al. (2021), <em>Tectonophysics</em>", doi: "https://doi.org/10.1016/j.tecto.2021.228860" },
+
+    { name: "Teide–Pico Viejo", where: "Tenerife, Canary Islands, Spain", lat: 28.27, lon: -16.64,
+      state: "progress", label: "In progress · EGU 2026",
+      text: "Atmospheric correction at a volcano whose topography is the problem: 3,700 m of relief inside a small footprint. Ten years of Sentinel-1 (2015–2025) reprocessed within the VolcaMotion project and the ERC Synergy grant ROTTnROCK.",
+      ref: "González, Mohammadnia et al., EGU General Assembly 2026 (accepted)" },
+
+    { name: "Fars arc salt diapirs", where: "Zagros fold-and-thrust belt, Iran", lat: 28.20, lon: 53.60,
+      state: "progress", label: "Under review",
+      text: "A satellite-wide survey and classification of diapir deformation across the Fars arc, extending the Kalut basin approach to a far larger and structurally busier province.",
+      ref: "Ajorlou, Mohammadnia et al., <em>Tectonophysics</em> — under review" },
+
+    { name: "Tarfala–Kebnekaise glaciers", where: "Northern Sweden, above the Arctic Circle", lat: 67.90, lon: 18.60,
+      state: "past", label: "Earlier work · 2019",
+      text: "135 Sentinel-1 acquisitions over five glaciers, processed with time-series D-InSAR to measure mass balance and flow: up to 1.2 m of ice lost and surface velocities reaching 2.3 m/yr. Funded by the Bolin Centre's Arctic Avenue programme.",
+      ref: "Darvishi, Mohammadnia &amp; Jaramillo, FRINGE 2021, Delft" },
+
+    { name: "Salmas Plain", where: "West Azerbaijan, northwestern Iran", lat: 38.20, lon: 44.80,
+      state: "past", label: "Earlier work · 2021",
+      text: "InSAR subsidence combined with well measurements to recover the hydrological properties of an aquifer system — the same geodetic toolkit pointed at groundwater rather than magma.",
+      ref: "Shahbazi, Mousavi, Rezaei &amp; Mohammadnia, FRINGE 2021, Delft" }
+  ];
+
+  var stage = document.getElementById('stage');
+  if (!stage) return;
+  var tileBox = document.getElementById('tiles'),
+      pinBox  = document.getElementById('pins'),
+      card    = document.getElementById('sitecard'),
+      credit  = document.getElementById('mapcredit');
+
+  var view = { z: 2, lat: 22, lon: 26, provider: 'esri' };
+  var active = -1, drag = null;
+
+  function project(lat, lon, z) {
+    var n = Math.pow(2, z) * 256,
+        x = (lon + 180) / 360 * n,
+        r = lat * Math.PI / 180,
+        y = (1 - Math.asinh(Math.tan(r)) / Math.PI) / 2 * n;
+    return { x: x, y: y };
+  }
+  function unproject(x, y, z) {
+    var n = Math.pow(2, z) * 256;
+    return {
+      lon: x / n * 360 - 180,
+      lat: Math.atan(Math.sinh(Math.PI * (1 - 2 * y / n))) * 180 / Math.PI
+    };
+  }
+  function tileUrl(z, x, y) {
+    var n = Math.pow(2, z);
+    if (y < 0 || y >= n) return null;
+    x = ((x % n) + n) % n;
+    return view.provider === 'esri'
+      ? 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/' + z + '/' + y + '/' + x
+      : 'https://' + ['a','b','c'][(x + y) % 3] + '.tile.openstreetmap.org/' + z + '/' + x + '/' + y + '.png';
+  }
+
+  function draw() {
+    var b = stage.getBoundingClientRect(), w = b.width, h = b.height, z = view.z;
+    var c = project(view.lat, view.lon, z), left = c.x - w / 2, top = c.y - h / 2;
+    tileBox.innerHTML = '';
+    var ok = 0, bad = 0;
+    for (var ty = Math.floor(top / 256); ty <= Math.floor((top + h) / 256); ty++) {
+      for (var tx = Math.floor(left / 256); tx <= Math.floor((left + w) / 256); tx++) {
+        var u = tileUrl(z, tx, ty);
+        if (!u) continue;
+        var im = new Image();
+        im.alt = '';
+        im.style.left = (tx * 256 - left) + 'px';
+        im.style.top = (ty * 256 - top) + 'px';
+        im.onload = function () { ok++; };
+        im.onerror = function () {
+          bad++;
+          if (bad > 4 && ok === 0 && view.provider === 'esri') {
+            view.provider = 'osm';
+            credit.textContent = 'Drag to pan. Basemap: OpenStreetMap. Markers show approximate site locations.';
+            draw();
+          }
+        };
+        im.src = u;
+        tileBox.appendChild(im);
+      }
+    }
+    placePins(left, top, z);
+  }
+
+  function placePins(left, top, z) {
+    pinBox.innerHTML = '';
+    SITES.forEach(function (s, i) {
+      var p = project(s.lat, s.lon, z);
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'pin ' + s.state + (i === active ? ' on' : '');
+      btn.style.left = (p.x - left) + 'px';
+      btn.style.top = (p.y - top) + 'px';
+      btn.title = s.name + ' — ' + s.where;
+      btn.setAttribute('aria-label', s.name + ', ' + s.where);
+      btn.innerHTML =
+        '<svg width="24" height="30" viewBox="0 0 24 30" aria-hidden="true">' +
+        '<path class="halo" d="M12 0.8C5.9 0.8 1.2 5.4 1.2 11.2c0 7.4 9 17.4 10.1 18.6.4.4.9.4 1.3 0 1.1-1.2 10.2-11.2 10.2-18.6C22.8 5.4 18.1.8 12 .8z"/>' +
+        '<path class="glyph" d="M12 2.6c-5.1 0-9 3.8-9 8.6 0 6.2 7.5 14.9 9 16.6 1.5-1.7 9-10.4 9-16.6 0-4.8-3.9-8.6-9-8.6z"/>' +
+        '<path d="M12 6.5 L17.4 16.6 H6.6 Z" fill="#fff"/>' +
+        '</svg>';
+      btn.addEventListener('click', function () { select(i); });
+      pinBox.appendChild(btn);
+    });
+  }
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function select(i) {
+    active = i;
+    var s = SITES[i];
+    var html = '<span class="status ' + s.state + '">' + esc(s.label) + '</span>' +
+               '<h3>' + esc(s.name) + '</h3>' +
+               '<p class="where">' + esc(s.where) + '</p>';
+    if (s.img) html += '<img class="thumb" src="' + s.img + '" alt="' + esc(s.alt || '') + '" loading="lazy">';
+    html += '<p>' + s.text + '</p>' +
+            '<p class="ref">' + s.ref +
+            (s.doi ? ' · <a href="' + s.doi + '" target="_blank" rel="noopener">Read paper ↗</a>' : '') +
+            '</p>';
+    card.innerHTML = html;
+    // recentre gently on the chosen site
+    view.lat = s.lat; view.lon = s.lon;
+    if (view.z < 3) view.z = 3;
+    draw();
+  }
+
+  document.getElementById('zin').addEventListener('click', function () {
+    view.z = Math.min(9, view.z + 1); draw();
+  });
+  document.getElementById('zout').addEventListener('click', function () {
+    view.z = Math.max(1, view.z - 1); draw();
+  });
+
+  stage.addEventListener('pointerdown', function (e) {
+    if (e.target.closest('.pin') || e.target.closest('.mapzoom')) return;
+    drag = { x: e.clientX, y: e.clientY, lat: view.lat, lon: view.lon };
+    stage.classList.add('dragging');
+    stage.setPointerCapture(e.pointerId);
+  });
+  stage.addEventListener('pointermove', function (e) {
+    if (!drag) return;
+    var c = project(drag.lat, drag.lon, view.z);
+    var p = unproject(c.x - (e.clientX - drag.x), c.y - (e.clientY - drag.y), view.z);
+    view.lat = Math.max(-82, Math.min(82, p.lat));
+    view.lon = p.lon;
+    draw();
+  });
+  ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (ev) {
+    stage.addEventListener(ev, function () { drag = null; stage.classList.remove('dragging'); });
+  });
+
+  var t;
+  window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(draw, 150); });
+  draw();
+})();
+</script>
 
 </body>
 </html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Common-Mode Filtering for InSAR — Mohammadhossein Mohammadnia</title>
+<meta name="description" content="Common-mode filtering (CMF): an open-source atmospheric correction for InSAR time series over small, steep volcanoes where global weather models are too coarse to help." />
+<link rel="canonical" href="https://mhmnia.github.io/research/cmf.html" />
+
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Mohammadhossein Mohammadnia" />
+<meta property="og:title" content="Common-Mode Filtering for InSAR time series" />
+<meta property="og:description" content="An open-source atmospheric correction for small, steep volcanoes where ERA5 and GACOS are too coarse. Cuts time-series scatter by about 36%." />
+<meta property="og:url" content="https://mhmnia.github.io/research/cmf.html" />
+<meta property="og:image" content="https://mhmnia.github.io/images/taftan.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@nirvana2462" />
+<meta name="twitter:image" content="https://mhmnia.github.io/images/taftan.jpg" />
+
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+
+<!-- Visitor counting. Replace YOURCODE with your GoatCounter site code, or delete these two lines. -->
+<script data-goatcounter="https://YOURCODE.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a class="brand" href="../">M. Mohammadnia</a>
+    <ul>
+      <li><a href="../#about">About</a></li>
+      <li><a href="../#sites">Field sites</a></li>
+      <li><a href="../publications.html">Publications</a></li>
+      <li><a class="here" href="cmf.html">CMF method</a></li>
+      <li><a href="../#tools">Tools</a></li>
+      <li><a class="cta" href="../cv.html">CV</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="pagehead">
+  <div class="container narrow">
+    <div class="eyebrow">Method · open source</div>
+    <h1>Common-mode filtering for InSAR time series</h1>
+    <p>An atmospheric correction built for the volcanoes that global weather models cannot see: small, steep edifices where the deformation signal and the atmospheric noise occupy the same few square kilometres.</p>
+    <div class="actions">
+      <a class="btn" href="https://github.com/mohammadnia11/Common-Mode-Filtering-CMF-" target="_blank" rel="noopener">Code on GitHub</a>
+      <a class="btn ghost" href="https://doi.org/10.5281/zenodo.14629139" target="_blank" rel="noopener">Zenodo archive</a>
+      <a class="btn ghost" href="https://doi.org/10.1029/2025GL114853" target="_blank" rel="noopener">Read the paper</a>
+    </div>
+  </div>
+</header>
+
+<main class="container narrow">
+
+<section style="padding:44px 0 10px">
+  <div class="keyfacts">
+    <div class="keyfact"><b>~36%</b><span>Reduction in time-series standard deviation, CMF alone</span></div>
+    <div class="keyfact"><b>up to 50%</b><span>Reduction when combined with an ERA5 correction</span></div>
+    <div class="keyfact"><b>&lt;20 km²</b><span>Footprint below which global weather models stop helping</span></div>
+    <div class="keyfact"><b>GPL-3.0</b><span>Free to use, modify and redistribute</span></div>
+  </div>
+</section>
+
+<section class="prose" style="padding:20px 0 60px">
+
+  <p>Volcano InSAR has a scale problem. The deformation we care about at a small stratovolcano is a few millimetres per year over a summit maybe five kilometres across. The atmospheric phase delay sitting on top of it is often larger, varies from acquisition to acquisition, and correlates strongly with topography — which is exactly the shape of the thing we are trying to measure.</p>
+
+  <h2>Why the usual corrections fall short</h2>
+
+  <p>The standard fix is to model the atmosphere from an external source: a global weather reanalysis such as ERA5, or a product such as GACOS. These work well for large deformation fields. They struggle at small volcanoes for a simple reason of resolution. A weather model grid cell spans tens of kilometres; a volcano with a footprint under roughly 20 km² sits inside a single cell, or straddles two. The model has no information at the scale of the edifice, so the correction it supplies is close to a constant across the whole target — it removes the regional trend and leaves the local delay untouched.</p>
+
+  <p>Stacking more interferograms helps, but slowly, and it costs exactly the thing that matters most for hazard: the ability to see a transient while it is still happening.</p>
+
+  <h2>The idea behind CMF</h2>
+
+  <p>CMF gives up on modelling the atmosphere and measures it instead, from the data itself.</p>
+
+  <p>The assumption is narrow and testable. Pixels immediately surrounding a volcano share most of the atmospheric delay that the volcano experiences, but they are not deforming. So the phase they carry, once you have removed any long-wavelength ramp, is a direct sample of the noise — the <em>common mode</em> — at that acquisition date. Subtract it from the summit and what is left is deformation plus a much smaller residual.</p>
+
+  <ol class="steps">
+    <li><b>Define a target and a reference ring.</b> The target is the deforming area of interest. The reference is an annulus of stable ground around it, close enough to share the same weather, far enough not to include the deformation.</li>
+    <li><b>Estimate the common mode per date.</b> For each acquisition, take a robust average of the reference-ring phase after removing the orbital and long-wavelength components.</li>
+    <li><b>Subtract it from the target time series.</b> The common mode is removed epoch by epoch, so the correction is time-varying, not a single spatial filter applied once.</li>
+    <li><b>Check what you removed.</b> Compare the corrected and uncorrected series, and test that the residual scatter has dropped while any transient survives. A correction that flattens the signal along with the noise has been applied over too wide a ring.</li>
+  </ol>
+
+  <figure class="figure">
+    <svg viewBox="0 0 720 300" role="img" aria-label="Diagram: a volcano summit target surrounded by a reference ring of stable ground, with the shared atmospheric delay removed from the target time series">
+      <rect width="720" height="300" fill="#f7fafb"/>
+
+      <!-- left: map view -->
+      <text x="26" y="30" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#14213d">Map view</text>
+      <circle cx="140" cy="165" r="102" fill="#e7f1f4" stroke="#a9c6d0" stroke-width="1.5" stroke-dasharray="6 5"/>
+      <circle cx="140" cy="165" r="66" fill="#f7fafb" stroke="#a9c6d0" stroke-width="1.5" stroke-dasharray="6 5"/>
+      <circle cx="140" cy="165" r="40" fill="#fdece5" stroke="#c1440e" stroke-width="2"/>
+      <path d="M140 140 L160 185 H120 Z" fill="#c1440e"/>
+      <text x="140" y="212" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#c1440e" text-anchor="middle">target</text>
+      <text x="140" y="256" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#3d6675" text-anchor="middle">reference ring</text>
+      <text x="140" y="272" font-family="Inter, sans-serif" font-size="10.5" fill="#5e7480" text-anchor="middle">stable ground, same weather</text>
+
+      <!-- arrow -->
+      <path d="M262 165 H300" stroke="#8fa6b0" stroke-width="1.6"/>
+      <path d="M300 165 l-8 -5 v10 z" fill="#8fa6b0"/>
+
+      <!-- right: time series -->
+      <text x="330" y="30" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#14213d">Summit time series</text>
+      <line x1="345" y1="245" x2="695" y2="245" stroke="#9fb8c0" stroke-width="1.3"/>
+      <line x1="345" y1="55" x2="345" y2="245" stroke="#9fb8c0" stroke-width="1.3"/>
+      <text x="352" y="70" font-family="Inter, sans-serif" font-size="10.5" fill="#5e7480">displacement</text>
+      <text x="660" y="264" font-family="Inter, sans-serif" font-size="10.5" fill="#5e7480">time</text>
+
+      <polyline fill="none" stroke="#b8c4c9" stroke-width="2"
+        points="355,205 380,140 402,222 425,132 450,210 472,146 497,215 520,128 545,196 570,120 595,180 620,104 645,160 670,96 690,140"/>
+      <polyline fill="none" stroke="#c1440e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+        points="355,200 385,196 415,191 445,184 475,173 505,158 535,141 565,127 595,117 625,111 655,107 690,105"/>
+
+      <rect x="470" y="60" width="12" height="12" fill="#b8c4c9"/>
+      <text x="490" y="70" font-family="Inter, sans-serif" font-size="11" fill="#5e7480">before CMF</text>
+      <rect x="470" y="80" width="12" height="12" fill="#c1440e"/>
+      <text x="490" y="90" font-family="Inter, sans-serif" font-size="11" fill="#c1440e">after CMF</text>
+    </svg>
+    <figcaption><b>How the correction works.</b> The reference ring samples the atmospheric delay the summit is experiencing but carries no deformation of its own. Removing that common mode epoch by epoch leaves the transient standing clear of the noise.</figcaption>
+  </figure>
+
+  <!--
+      OPTIONAL: to show the real figures from the GRL paper, save them into
+      the images/ folder and delete the comment markers around the block below.
+      Suggested filenames: cmf-before-after.jpg and cmf-timeseries.jpg
+
+  <figure class="figure">
+    <img src="../images/cmf-before-after.jpg" alt="Line-of-sight velocity maps of Taftan before and after common-mode filtering">
+    <figcaption><b>Taftan, before and after correction.</b> Mohammadnia et al. (2025), Geophysical Research Letters.</figcaption>
+  </figure>
+  -->
+
+  <h2>What it bought at Taftan</h2>
+
+  <p>Taftan is the case the method was built for: a 3,900 m edifice on the Makran arc with a small summit footprint, no ground instrumentation, and no dated eruption for roughly 700,000 years. In the uncorrected time series the signal is not convincing. After filtering, a coherent ten-month episode appears — about 9 cm of uplift, peaking near 11 cm/yr, with the flanks moving gently outward.</p>
+
+  <p>That pattern is what shallow gas or hot fluid injection looks like. Bayesian source inversion places the source 490–630 m beneath the summit, and hyperbolic-tangent transient modelling pins down when it started and when it stopped. Nothing triggered it: no earthquake, no eruption. The full argument is in the paper.</p>
+
+  <div class="callout">
+    <h3>Where CMF helps, and where it does not</h3>
+    <p><strong>Use it when</strong> the target is small relative to a weather-model grid cell, stable ground surrounds it at a similar elevation, and you are chasing a transient rather than a long-term trend.</p>
+    <p><strong>Be careful when</strong> the deformation field is broad enough to reach into the reference ring — the filter will then remove part of your signal — or when the surrounding terrain differs sharply in elevation or land cover from the target, so the delay it samples is not the delay the target sees.</p>
+  </div>
+
+  <h2>Getting the code</h2>
+
+  <p>CMF is written in Python and released under GPL-3.0. It is built to sit inside an existing time-series workflow rather than replace one, and has been used alongside MintPy, StaMPS and LiCSBAS. It is the standard filtering step in the Tibesti province study as well.</p>
+
+  <ul>
+    <li><strong>Source:</strong> <a href="https://github.com/mohammadnia11/Common-Mode-Filtering-CMF-" target="_blank" rel="noopener">github.com/mohammadnia11/Common-Mode-Filtering-CMF-</a></li>
+    <li><strong>Archived release:</strong> <a href="https://doi.org/10.5281/zenodo.14629139" target="_blank" rel="noopener">10.5281/zenodo.14629139</a> (v1, January 2025)</li>
+    <li><strong>Paper:</strong> <a href="https://doi.org/10.1029/2025GL114853" target="_blank" rel="noopener">10.1029/2025GL114853</a> — open access</li>
+  </ul>
+
+  <h3>If you use it, please cite</h3>
+  <div class="cite-box">
+    Mohammadnia, M., Yip, M. W., Webb, A. A. G., &amp; González, P. J. (2025). Spontaneous transient summit uplift at Taftan volcano (Makran subduction arc) imaged using an InSAR common-mode filtering method. <em>Geophysical Research Letters</em>, 52(19), e2025GL114853. https://doi.org/10.1029/2025GL114853
+  </div>
+
+  <p style="margin-top:26px">Questions, bug reports and requests to adapt it to another workflow are all welcome — <a href="mailto:mh.mohammadnia1@gmail.com">get in touch</a> or open an issue on GitHub.</p>
+
+  <div class="callout" style="border-left-color:#8fa6b0;background:#f7f9fa">
+    <h3 style="color:#3d5a66">Acknowledgement</h3>
+    <p>This work was supported by the Spanish Ministry of Science, Innovation and Universities <em>VolcaMotion</em> project (PID2022-139159NB-I00, MCIN/AEI/10.13039/501100011033 and FEDER). Sentinel-1 SAR data are copyright of the European Space Agency and distributed by the Alaska Satellite Facility DAAC.</p>
+  </div>
+
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    © 2026 Mohammadhossein Mohammadnia ·
+    <a href="https://orcid.org/0009-0000-2193-2980" target="_blank" rel="noopener">ORCID 0009-0000-2193-2980</a>
+  </div>
+</footer>
+
+</body>
+</html>
