@@ -79,54 +79,74 @@ p:lang(en){hyphenate-limit-chars:7 3 3}
 .burger span::before{top:-5px}.burger span::after{top:5px}
 
 /* ─────────────── hero ─────────────── */
-.hero{position:relative;isolation:isolate;overflow:hidden;
-  padding:clamp(46px,7vw,88px) 0 clamp(42px,6vw,74px);background:#fff;border-bottom:1px solid var(--line)}
-/* two faint colour blooms give the white page depth without a photo background */
-.hero::before{content:"";position:absolute;inset:-20% -10%;z-index:-2;pointer-events:none;
+.hero{position:relative;isolation:isolate;overflow:hidden;background:#fff;
+  border-bottom:1px solid var(--line);
+  padding:clamp(52px,7.5vw,104px) 0 clamp(48px,6.5vw,86px)}
+
+/* soft colour field, bleeding off the right edge, that the portrait sits against */
+.hero-field{position:absolute;z-index:-2;top:-14%;right:-12%;width:64%;height:128%;
+  border-radius:46% 54% 40% 60%/48% 42% 58% 52%;
   background:
-    radial-gradient(46% 52% at 82% 18%,rgba(42,90,168,.13),transparent 70%),
-    radial-gradient(40% 46% at 92% 76%,rgba(184,58,41,.11),transparent 72%),
-    radial-gradient(38% 44% at 6% 88%,rgba(23,120,98,.10),transparent 70%)}
-/* a fine graticule, the way a map is ruled */
-.hero::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.5;
-  background-image:linear-gradient(var(--line) 1px,transparent 1px),
-                   linear-gradient(90deg,var(--line) 1px,transparent 1px);
-  background-size:64px 64px;
-  -webkit-mask-image:radial-gradient(72% 70% at 30% 40%,#000 0%,transparent 78%);
-  mask-image:radial-gradient(72% 70% at 30% 40%,#000 0%,transparent 78%)}
+    radial-gradient(58% 58% at 38% 32%,rgba(42,90,168,.13),transparent 72%),
+    radial-gradient(56% 60% at 74% 74%,rgba(184,58,41,.12),transparent 74%),
+    radial-gradient(52% 52% at 24% 86%,rgba(23,120,98,.11),transparent 72%);
+  filter:blur(6px)}
+
+/* topographic contours: the motif of the whole site, drawn once, large */
+.hero-art{position:absolute;z-index:-1;top:50%;right:-8%;width:min(76vw,980px);
+  transform:translateY(-50%);color:var(--ink);opacity:.13;pointer-events:none}
+.hero-art .contours{width:100%;height:auto;display:block}
+.hero-art::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(95deg,#fff 8%,rgba(255,255,255,.55) 34%,rgba(255,255,255,0) 62%)}
+
 .hero .wrap{position:relative;z-index:1}
-.hero h1::after{content:"";display:block;width:96px;height:5px;border-radius:3px;margin:18px 0 0;
-  background:linear-gradient(90deg,var(--blue-a),var(--teal-a),var(--amber-a),var(--red-a))}
-.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:clamp(28px,5vw,58px);align-items:center}
-.hero h1{font-size:clamp(36px,5.8vw,60px);line-height:1.04;letter-spacing:-.022em;margin-bottom:16px}
-.hero .stance{font-family:var(--display);font-size:clamp(18px,2.2vw,22px);font-style:italic;
-  color:var(--red-a);line-height:1.45;max-width:32ch;margin-bottom:18px}
-.hero .whereabouts{font-size:16px;color:var(--ink-2);line-height:1.7;max-width:56ch;margin-bottom:24px;
-  text-align:justify;hyphens:auto}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 330px;
+  gap:clamp(30px,5.5vw,72px);align-items:center}
+
+/* a small label instead of a shouty eyebrow */
+.eyebrow{display:flex;align-items:center;gap:9px;font-size:13.5px;font-weight:500;
+  letter-spacing:.02em;color:var(--ink-2);margin-bottom:18px}
+.eyebrow .dot{width:9px;height:9px;border-radius:50%;background:var(--red-a);
+  box-shadow:0 0 0 4px rgba(184,58,41,.15)}
+
+.hero h1{font-size:clamp(38px,6.2vw,66px);line-height:1.0;letter-spacing:-.026em;
+  margin-bottom:0;font-variation-settings:"SOFT" 0,"WONK" 0,"opsz" 144}
+.hero h1 .surname{color:var(--red-a)}
+.hero h1::after{content:none}
+
+/* four bars, the site's colour ramp, used as a signature under the name */
+.namerule{display:flex;gap:5px;margin:20px 0 22px}
+.namerule i{display:block;width:34px;height:5px;border-radius:3px}
+.namerule i:nth-child(1){background:var(--blue-a)}
+.namerule i:nth-child(2){background:var(--teal-a)}
+.namerule i:nth-child(3){background:var(--amber-a)}
+.namerule i:nth-child(4){background:var(--red-a)}
+
+.hero .stance{font-family:var(--display);font-size:clamp(20px,2.5vw,27px);font-weight:400;
+  font-style:italic;line-height:1.32;color:var(--ink);letter-spacing:-.01em;margin-bottom:20px}
+.hero .whereabouts{font-size:16px;color:var(--ink-2);line-height:1.72;max-width:54ch;
+  margin-bottom:26px;text-align:justify;hyphens:auto}
 .hero .whereabouts b{color:var(--ink);font-weight:600}
 .hero-acts{display:flex;flex-wrap:wrap;gap:10px}
 
-.portrait{position:relative;width:310px;justify-self:end;padding:18px}
-/* back plate, tilted, carrying the colour */
-.portrait .plate{position:absolute;inset:26px 0 6px 26px;border-radius:20px;transform:rotate(-3.2deg);
-  background:linear-gradient(148deg,var(--blue-t),var(--teal-t) 46%,var(--amber-t));
-  border:1px solid var(--edge,var(--line));box-shadow:0 10px 28px rgba(22,32,44,.10)}
-/* mid plate, tilted the other way, almost white */
-.portrait .plate2{position:absolute;inset:14px 14px 14px 0;border-radius:19px;transform:rotate(2deg);
-  background:linear-gradient(160deg,#fff,rgba(255,255,255,.6));
-  border:1px solid var(--line);box-shadow:0 8px 22px rgba(22,32,44,.07)}
-/* hairline ring around the whole stack */
-.portrait .ring{position:absolute;inset:0;border-radius:24px;border:1px solid var(--red-e);
-  pointer-events:none}
-/* corner brackets, drawn not imported */
-.portrait .ring::before,.portrait .ring::after{content:"";position:absolute;width:26px;height:26px}
-.portrait .ring::before{top:-1px;left:-1px;border-top:2px solid var(--red-a);border-left:2px solid var(--red-a);
-  border-radius:8px 0 0 0}
-.portrait .ring::after{bottom:-1px;right:-1px;border-bottom:2px solid var(--teal-a);
-  border-right:2px solid var(--teal-a);border-radius:0 0 8px 0}
-.portrait img{position:relative;z-index:2;width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:14px;
-  border:7px solid #fff;background:var(--slate-t);
-  box-shadow:0 22px 48px rgba(22,32,44,.22),0 2px 6px rgba(22,32,44,.10)}
+/* ── portrait: an arch, matted, with a colour block behind one shoulder ── */
+.portrait{position:relative;width:330px;justify-self:end;margin:0;padding:0}
+.portrait img{position:relative;z-index:2;display:block;width:100%;aspect-ratio:4/5;
+  object-fit:cover;object-position:50% 22%;
+  border-radius:165px 165px 14px 14px;
+  border:9px solid #fff;background:var(--slate-t);
+  box-shadow:0 26px 56px rgba(22,32,44,.20),0 3px 10px rgba(22,32,44,.10)}
+/* hairline ring echoing the arch, offset outward */
+.portrait .arch-ring{position:absolute;z-index:1;inset:-16px -16px 24px -16px;
+  border:1px solid var(--red-e);border-radius:190px 190px 18px 18px;pointer-events:none}
+/* solid colour block peeking out at the lower left only */
+.portrait .arch-block{position:absolute;z-index:0;left:-30px;bottom:26px;width:118px;height:118px;
+  border-radius:14px;background:linear-gradient(148deg,var(--blue-t),var(--teal-t));
+  border:1px solid var(--blue-e)}
+.portrait figcaption{position:relative;z-index:2;margin-top:18px;padding-left:16px;
+  font-size:12.5px;line-height:1.55;color:var(--ink-3);text-align:left}
+.portrait figcaption .tick{position:absolute;left:0;top:4px;width:3px;height:calc(100% - 8px);
+  border-radius:2px;background:var(--red-a);opacity:.8}
 
 /* ─────────────── page header ─────────────── */
 .phead{padding:clamp(34px,5vw,58px) 0 clamp(26px,4vw,40px);border-bottom:1px solid var(--line)}
@@ -389,7 +409,11 @@ h2.head{font-size:clamp(24px,3.1vw,32px);margin-bottom:11px}
   .menu a.mark{margin:10px 0 0;border-radius:9px;text-align:center;padding:11px}
   .masthead .wrap{position:relative}
   .hero-grid{grid-template-columns:1fr;gap:30px}
-  .portrait{width:220px;justify-self:center;order:-1;margin-bottom:8px}
+  .portrait{width:250px;justify-self:center;order:-1;margin-bottom:10px}
+  .portrait figcaption{text-align:center;padding-left:0}
+  .portrait figcaption .tick{display:none}
+  .hero-art{right:-30%;opacity:.09}
+  .hero .whereabouts{max-width:none}
   .tool{grid-template-columns:1fr;gap:20px}
   .tool figure{max-width:250px}
   .deflist{grid-template-columns:1fr;gap:3px}
