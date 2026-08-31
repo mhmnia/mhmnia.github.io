@@ -37,11 +37,10 @@
     <div class="hero-grid">
       <div>
         <h1>Mohammadhossein<br>Mohammadnia</h1>
-        <p class="stance">I measure ground that moves a few millimetres a year, from 700 kilometres up.</p>
-        <p class="whereabouts">Solid-Earth geodesist, <b>PhD in Earth Sciences</b> from the University of
-        Hong Kong. I work on radar interferometry for volcanoes that nobody is watching &mdash; the remote
-        ones, the long-dormant ones, the ones with no instrument on the ground &mdash; and on the methods
-        that make those measurements trustworthy.</p>
+        <p class="stance">Solid-Earth geodesist. Radar interferometry for volcano deformation and hazard assessment.</p>
+        <p class="whereabouts"><b>PhD in Earth Sciences</b>, The University of Hong Kong. My research develops
+        the methods that make satellite radar measurements reliable at volcanoes with no instruments on the
+        ground, and applies them to detect unrest that would otherwise go unrecorded.</p>
         <div class="hero-acts">
           <a class="btn" href="publications.html">Read the research</a>
           <a class="btn quiet" href="cv.html">Curriculum vitae</a>
@@ -117,8 +116,7 @@
   <div class="wrap">
     <hr class="rule">
     <h2 class="head">Where the work has taken me</h2>
-    <p class="sub">Eight sites on four continents, from an arc volcano on the Iran&ndash;Pakistan border to
-    glaciers above the Arctic Circle. Click a marker to read what each study found.</p>
+    <p class="sub">Eight sites on four continents, from an arc volcano on the Iran&ndash;Pakistan border to glaciers above the Arctic Circle. The map opens at the closest zoom that still holds every site; click a marker to read what that study found, and use the buttons to move in further.</p>
 
     <div class="mapwrap">
       <div>
@@ -191,7 +189,7 @@ var stage=document.getElementById('stage'); if(!stage)return;
 var tileBox=document.getElementById('tiles'),pinBox=document.getElementById('pins'),
     card=document.getElementById('sitecard'),credit=document.getElementById('mapcredit');
 /* zoom 1 shows every site at once by default */
-var view={z:1,lat:24,lon:-8,provider:'esri'},active=-1,drag=null;
+var view={z:2,lat:38,lon:-15,provider:'esri'},active=-1,drag=null,touched=false;
 
 function project(lat,lon,z){var n=Math.pow(2,z)*256,x=(lon+180)/360*n,r=lat*Math.PI/180,
   y=(1-Math.asinh(Math.tan(r))/Math.PI)/2*n;return{x:x,y:y}}
@@ -204,6 +202,25 @@ function tileUrl(z,x,y){var n=Math.pow(2,z);if(y<0||y>=n)return null;x=((x%n)+n)
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){
   return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 
+function bbox(z){
+  var xs=[],ys=[];
+  SITES.forEach(function(s){var p=project(s.lat,s.lon,z);xs.push(p.x);ys.push(p.y)});
+  return{x0:Math.min.apply(null,xs),x1:Math.max.apply(null,xs),
+         y0:Math.min.apply(null,ys),y1:Math.max.apply(null,ys)};
+}
+/* pick the closest zoom that still holds every marker, then centre on them */
+function fitAll(){
+  var b=stage.getBoundingClientRect();
+  var W=(b.width||stage.offsetWidth||900)-90,
+      H=(b.height||stage.offsetHeight||500)-120;   /* room for pins, legend, zoom buttons */
+  var best=1;
+  for(var z=1;z<=6;z++){
+    var q=bbox(z);
+    if(q.x1-q.x0<=W&&q.y1-q.y0<=H)best=z;else break;
+  }
+  var q=bbox(best),c=unproject((q.x0+q.x1)/2,(q.y0+q.y1)/2,best);
+  view.z=best;view.lat=c.lat;view.lon=c.lon;
+}
 function draw(){
   var b=stage.getBoundingClientRect(),w=b.width,h=b.height,z=view.z;
   var c=project(view.lat,view.lon,z),left=c.x-w/2,top=c.y-h/2;
@@ -237,7 +254,7 @@ function placePins(left,top,z){
   });
 }
 function select(i){
-  active=i;var s=SITES[i];
+  active=i;touched=true;var s=SITES[i];
   card.className='sitecard box '+(s.state==='published'?'c-red':s.state==='progress'?'c-teal':'c-slate');
   var h='<span class="pill">'+esc(s.flag)+'</span><h3>'+esc(s.name)+'</h3>'
        +'<p class="where">'+esc(s.where)+'</p>';
@@ -247,11 +264,11 @@ function select(i){
   card.innerHTML=h;
   view.lat=s.lat;view.lon=s.lon;if(view.z<3)view.z=3;draw();
 }
-document.getElementById('zin').addEventListener('click',function(){view.z=Math.min(9,view.z+1);draw()});
-document.getElementById('zout').addEventListener('click',function(){view.z=Math.max(1,view.z-1);draw()});
+document.getElementById('zin').addEventListener('click',function(){touched=true;view.z=Math.min(9,view.z+1);draw()});
+document.getElementById('zout').addEventListener('click',function(){touched=true;view.z=Math.max(1,view.z-1);draw()});
 stage.addEventListener('pointerdown',function(e){
   if(e.target.closest('.pin')||e.target.closest('.mapzoom'))return;
-  drag={x:e.clientX,y:e.clientY,lat:view.lat,lon:view.lon};
+  touched=true;drag={x:e.clientX,y:e.clientY,lat:view.lat,lon:view.lon};
   stage.classList.add('dragging');stage.setPointerCapture(e.pointerId)});
 stage.addEventListener('pointermove',function(e){
   if(!drag)return;
@@ -260,8 +277,9 @@ stage.addEventListener('pointermove',function(e){
   view.lat=Math.max(-82,Math.min(82,p.lat));view.lon=p.lon;draw()});
 ['pointerup','pointercancel','pointerleave'].forEach(function(ev){
   stage.addEventListener(ev,function(){drag=null;stage.classList.remove('dragging')})});
-var t;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(draw,150)});
-draw();
+var t;window.addEventListener('resize',function(){clearTimeout(t);
+  t=setTimeout(function(){if(!touched)fitAll();draw()},150)});
+fitAll();draw();
 })();
 </script>
 <footer class="foot">
