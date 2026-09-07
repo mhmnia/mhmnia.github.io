@@ -82,6 +82,187 @@
 <a class="quick-card" href="people.html"><b>Community leaders</b><span>Researchers I follow across geodesy, InSAR, volcanology and active tectonics.</span></a>
 </div>
 </div></section>
+
+<section class="band" id="sites">
+  <div class="wrap">
+    <hr class="rule">
+    <h2 class="head">Where the work has taken me</h2>
+    <p class="sub">Eight study sites across four continents — from volcanoes and salt diapirs to glaciers and groundwater. Click a marker to see the study, method, and publication.</p>
+    <div class="mapwrap">
+      <div>
+        <div class="mapstage" id="stage">
+          <div class="maptiles" id="tiles"></div>
+          <div class="mappins" id="pins"></div>
+          <div class="mapzoom">
+            <button id="zin" type="button" aria-label="Zoom in">+</button>
+            <button id="zout" type="button" aria-label="Zoom out">&minus;</button>
+          </div>
+          <div class="maplegend">
+            <span><i class="pub"></i>Published</span>
+            <span><i class="prog"></i>In progress</span>
+            <span><i class="past"></i>Earlier work</span>
+          </div>
+        </div>
+        <p class="mapcredit" id="mapcredit">Drag to pan. Basemap: Esri World Imagery. Markers show approximate study locations.</p>
+      </div>
+      <aside class="sitecard box c-amber" id="sitecard">
+        <span class="pill">Study sites</span>
+        <h3>Pick a site on the map</h3>
+        <p>Each marker opens a short summary of the study and a link to the paper where one exists.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+var SITES=[
+ {name:"Taftan volcano",where:"Makran arc, southeastern Iran",lat:28.60,lon:61.13,state:"published",
+  flag:"Published · GRL 2025",img:"images/taftan.jpg",alt:"InSAR velocity maps of Taftan volcano",
+  text:"A ten-month summit uplift was resolved using Common-Mode Filtering, revealing transient deformation at a remote and poorly monitored volcano.",
+  ref:"Mohammadnia et al. (2025), Geophysical Research Letters",doi:"https://doi.org/10.1029/2025GL114853"},
+ {name:"Tibesti Volcanic Province",where:"Central Sahara, northern Chad",lat:21.04,lon:16.47,state:"published",
+  flag:"Published · Bulletin of Volcanology 2026",img:"images/tibesti.jpg",alt:"Sentinel-1 velocity map of the Tibesti volcanic province",
+  text:"A satellite deformation survey across the Tibesti volcanic province revealed evidence for active magmatic and hydrothermal processes.",
+  ref:"Mohammadnia et al. (2026), Bulletin of Volcanology",doi:"https://doi.org/10.1007/s00445-026-01954-0"},
+ {name:"Sierra Negra",where:"Isabela Island, Galápagos, Ecuador",lat:-0.83,lon:-91.17,state:"published",
+  flag:"Published · GJI 2025",img:"images/sierra.jpg",alt:"Sierra Negra eruption displacement maps",
+  text:"The 2018 eruption was examined with InSAR, optical flow, and pixel-offset tracking to resolve deformation through the eruption cycle.",
+  ref:"Mohammadnia et al. (2025), Geophysical Journal International",doi:"https://doi.org/10.1093/gji/ggaf012"},
+ {name:"Kalut basin salt diapirs",where:"Lut desert, central Iran",lat:30.35,lon:58.00,state:"published",
+  flag:"Published · Tectonophysics 2021",img:"images/salt.jpg",alt:"Salt diapirs in the Kalut basin",
+  text:"A basin-scale InSAR study used 137 Sentinel-1 scenes and 724 interferograms to characterize active salt-diapir deformation.",
+  ref:"Mohammadnia et al. (2021), Tectonophysics",doi:"https://doi.org/10.1016/j.tecto.2021.228860"},
+ {name:"Fars arc salt diapirs",where:"Zagros fold-and-thrust belt, Iran",lat:28.20,lon:53.60,state:"published",
+  flag:"Published · Tectonophysics 2026",
+  text:"A satellite-based survey assessed deformation across 101 emergent salt diapirs in the Fars arc.",
+  ref:"Ajorlou, Mohammadnia et al. (2026), Tectonophysics",doi:"https://doi.org/10.1016/j.tecto.2026.231366"},
+ {name:"Teide–Pico Viejo",where:"Tenerife, Canary Islands, Spain",lat:28.27,lon:-16.64,state:"progress",
+  flag:"In progress · EGU 2026",
+  text:"Long Sentinel-1 time series are being used to study atmospheric correction and subtle deformation across steep volcanic topography.",
+  ref:"González, Mohammadnia et al., EGU General Assembly 2026"},
+ {name:"Tarfala–Kebnekaise glaciers",where:"Northern Sweden, above the Arctic Circle",lat:67.90,lon:18.60,state:"past",
+  flag:"Earlier work · 2019",
+  text:"Time-series D-InSAR was used to investigate glacier mass balance and surface flow from Sentinel-1 observations.",
+  ref:"Darvishi, Mohammadnia & Jaramillo, FRINGE 2021"},
+ {name:"Salmas Plain",where:"West Azerbaijan, northwestern Iran",lat:38.20,lon:44.80,state:"past",
+  flag:"Earlier work · 2021",
+  text:"InSAR subsidence measurements were combined with well observations to investigate aquifer-system properties.",
+  ref:"Shahbazi, Mousavi, Rezaei & Mohammadnia, FRINGE 2021"}
+];
+
+var stage=document.getElementById("stage");
+if(!stage)return;
+var tileBox=document.getElementById("tiles"), pinBox=document.getElementById("pins"),
+    card=document.getElementById("sitecard"), credit=document.getElementById("mapcredit");
+var view={z:2,lat:35,lon:-10,provider:"esri"}, active=-1, drag=null, touched=false;
+
+function project(lat,lon,z){
+  var n=Math.pow(2,z)*256, x=(lon+180)/360*n, r=lat*Math.PI/180;
+  return {x:x,y:(1-Math.asinh(Math.tan(r))/Math.PI)/2*n};
+}
+function unproject(x,y,z){
+  var n=Math.pow(2,z)*256;
+  return {lon:x/n*360-180,lat:Math.atan(Math.sinh(Math.PI*(1-2*y/n)))*180/Math.PI};
+}
+function tileUrl(z,x,y){
+  var n=Math.pow(2,z); if(y<0||y>=n)return null; x=((x%n)+n)%n;
+  if(view.provider==="esri")
+    return "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/"+z+"/"+y+"/"+x;
+  return "https://"+["a","b","c"][(x+y)%3]+".tile.openstreetmap.org/"+z+"/"+x+"/"+y+".png";
+}
+function esc(s){
+  return String(s==null?"":s).replace(/[&<>"']/g,function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+  });
+}
+function bbox(z){
+  var xs=[],ys=[];
+  SITES.forEach(function(s){var p=project(s.lat,s.lon,z);xs.push(p.x);ys.push(p.y)});
+  return {x0:Math.min.apply(null,xs),x1:Math.max.apply(null,xs),y0:Math.min.apply(null,ys),y1:Math.max.apply(null,ys)};
+}
+function fitAll(){
+  var b=stage.getBoundingClientRect(), W=(b.width||900)-90, H=(b.height||500)-120, best=1;
+  for(var z=1;z<=6;z++){
+    var q=bbox(z);
+    if(q.x1-q.x0<=W && q.y1-q.y0<=H) best=z; else break;
+  }
+  var q=bbox(best), c=unproject((q.x0+q.x1)/2,(q.y0+q.y1)/2,best);
+  view.z=best; view.lat=c.lat; view.lon=c.lon;
+}
+function draw(){
+  var b=stage.getBoundingClientRect(),w=b.width,h=b.height,z=view.z;
+  var c=project(view.lat,view.lon,z),left=c.x-w/2,top=c.y-h/2;
+  tileBox.innerHTML=""; var ok=0,bad=0;
+  for(var ty=Math.floor(top/256);ty<=Math.floor((top+h)/256);ty++){
+    for(var tx=Math.floor(left/256);tx<=Math.floor((left+w)/256);tx++){
+      var u=tileUrl(z,tx,ty); if(!u)continue;
+      var im=new Image(); im.alt="";
+      im.style.left=(tx*256-left)+"px"; im.style.top=(ty*256-top)+"px";
+      im.onload=function(){ok++};
+      im.onerror=function(){
+        bad++;
+        if(bad>4&&ok===0&&view.provider==="esri"){
+          view.provider="osm";
+          credit.textContent="Drag to pan. Basemap: OpenStreetMap. Markers show approximate study locations.";
+          draw();
+        }
+      };
+      im.src=u; tileBox.appendChild(im);
+    }
+  }
+  placePins(left,top,z);
+}
+function placePins(left,top,z){
+  pinBox.innerHTML="";
+  SITES.forEach(function(s,i){
+    var p=project(s.lat,s.lon,z),btn=document.createElement("button");
+    btn.type="button"; btn.className="pin "+s.state+(i===active?" on":"");
+    btn.style.left=(p.x-left)+"px"; btn.style.top=(p.y-top)+"px";
+    btn.title=s.name+" — "+s.where; btn.setAttribute("aria-label",s.name+", "+s.where);
+    btn.innerHTML='<svg width="22" height="28" viewBox="0 0 24 30" aria-hidden="true">'
+      +'<path class="halo" d="M12 .8C5.9.8 1.2 5.4 1.2 11.2c0 7.4 9 17.4 10.1 18.6.4.4.9.4 1.3 0 1.1-1.2 10.2-11.2 10.2-18.6C22.8 5.4 18.1.8 12 .8z"/>'
+      +'<path class="glyph" d="M12 2.6c-5.1 0-9 3.8-9 8.6 0 6.2 7.5 14.9 9 16.6 1.5-1.7 9-10.4 9-16.6 0-4.8-3.9-8.6-9-8.6z"/>'
+      +'<path d="M12 6.5 L17.4 16.6 H6.6 Z" fill="#fff"/></svg>';
+    btn.addEventListener("click",function(){select(i)});
+    pinBox.appendChild(btn);
+  });
+}
+function select(i){
+  active=i; touched=true; var s=SITES[i];
+  card.className="sitecard box "+(s.state==="published"?"c-red":s.state==="progress"?"c-teal":"c-slate");
+  var h='<span class="pill">'+esc(s.flag)+'</span><h3>'+esc(s.name)+'</h3><p class="where">'+esc(s.where)+'</p>';
+  if(s.img)h+='<img class="thumb" src="'+s.img+'" alt="'+esc(s.alt||"")+'" loading="lazy">';
+  h+='<p>'+esc(s.text)+'</p><p class="ref">'+esc(s.ref);
+  if(s.doi)h+=' · <a href="'+s.doi+'" target="_blank" rel="noopener">Read the paper</a>';
+  h+='</p>'; card.innerHTML=h;
+  view.lat=s.lat; view.lon=s.lon; if(view.z<3)view.z=3; draw();
+}
+document.getElementById("zin").addEventListener("click",function(){touched=true;view.z=Math.min(9,view.z+1);draw()});
+document.getElementById("zout").addEventListener("click",function(){touched=true;view.z=Math.max(1,view.z-1);draw()});
+stage.addEventListener("pointerdown",function(e){
+  if(e.target.closest(".pin")||e.target.closest(".mapzoom"))return;
+  touched=true; drag={x:e.clientX,y:e.clientY,lat:view.lat,lon:view.lon};
+  stage.classList.add("dragging"); stage.setPointerCapture(e.pointerId);
+});
+stage.addEventListener("pointermove",function(e){
+  if(!drag)return;
+  var c=project(drag.lat,drag.lon,view.z);
+  var p=unproject(c.x-(e.clientX-drag.x),c.y-(e.clientY-drag.y),view.z);
+  view.lat=Math.max(-82,Math.min(82,p.lat)); view.lon=p.lon; draw();
+});
+["pointerup","pointercancel","pointerleave"].forEach(function(ev){
+  stage.addEventListener(ev,function(){drag=null;stage.classList.remove("dragging")});
+});
+var rt;
+window.addEventListener("resize",function(){
+  clearTimeout(rt);
+  rt=setTimeout(function(){if(!touched)fitAll();draw()},150);
+});
+fitAll(); draw();
+})();
+</script>
+
 <footer class="foot"><div class="wrap">
 <div class="cols">
 <div><h4>Research</h4><ul>
