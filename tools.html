@@ -1,151 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Software and tools — Mohammadhossein Mohammadnia</title>
-<meta name="description" content="The open-source CMF atmospheric correction for InSAR, and the Earthquake–Volcano Proximity Explorer.">
-<link rel="canonical" href="https://mhmnia.github.io/tools.html">
-<meta name="author" content="Mohammadhossein Mohammadnia">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Mohammadhossein Mohammadnia">
-<meta property="og:title" content="Software and tools — Mohammadhossein Mohammadnia">
-<meta property="og:description" content="The open-source CMF atmospheric correction for InSAR, and the Earthquake–Volcano Proximity Explorer.">
-<meta property="og:url" content="https://mhmnia.github.io/tools.html">
-<meta property="og:image" content="https://mhmnia.github.io/images/gallery/06.jpg">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="@nirvana2462">
-<meta name="twitter:image" content="https://mhmnia.github.io/images/gallery/06.jpg">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Software and tools — Mohammadhossein Mohammadnia</title><meta name="description" content="The open-source CMF atmospheric correction for InSAR and the Earthquake–Volcano Proximity Explorer.">
+<link rel="canonical" href="https://mhmnia.github.io/tools.html"><meta name="author" content="Mohammadhossein Mohammadnia">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Mohammadhossein Mohammadnia">
+<meta property="og:title" content="Software and tools — Mohammadhossein Mohammadnia"><meta property="og:description" content="The open-source CMF atmospheric correction for InSAR and the Earthquake–Volcano Proximity Explorer.">
+<meta property="og:url" content="https://mhmnia.github.io/tools.html"><meta property="og:image" content="https://mhmnia.github.io/images/gallery/06.jpg">
+<meta name="twitter:card" content="summary_large_image"><link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
 <script data-goatcounter="https://mhmnia.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-</head>
-<body>
-<header class="masthead">
-  <div class="wrap">
-    <a class="sig" href="./"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="17" r="13" fill="none" stroke="#2a5aa8" stroke-width="2.2"/><circle cx="16" cy="17" r="8" fill="none" stroke="#177862" stroke-width="2.2"/><circle cx="16" cy="17" r="3.4" fill="#a9711a"/><path d="M16 3 L23 15 H9 Z" fill="#b83a29"/></svg><b>Mohammadnia</b></a>
-    <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span></button>
-    <nav class="menu" id="menu"><a href="./">About</a><a href="publications.html">Publications</a><a href="gallery.html">Gallery</a><a href="tools.html" aria-current="page">Tools</a><a href="volcanoes.html">Volcanoes</a><a href="insar.html">InSAR</a><a href="people.html">Inspirations</a><a href="cv.html">CV</a><a class="mark" href="contact.html">Contact</a></nav>
-  </div>
-</header>
-
-<header class="phead"><div class="wrap">
-  <h1>Software and tools</h1>
-  <p class="lede">Two things I have built and released openly: a method that makes small-volcano InSAR
-  workable, and a browser tool that turns an earthquake into a shortlist of volcanoes worth checking. Both
-  are free to use and free to reuse.</p>
-</div></header>
-
-<section class="band"><div class="wrap">
-
-  <article class="tool c-violet">
-    <figure><svg viewBox="0 0 220 190" role="img" aria-label="A noisy grey time series and a smoother filtered one">
-  <line x1="18" y1="158" x2="206" y2="158" stroke="#9aa8b6" stroke-width="1.2"/>
-  <line x1="18" y1="26" x2="18" y2="158" stroke="#9aa8b6" stroke-width="1.2"/>
-  <polyline fill="none" stroke="#a9b6c2" stroke-width="2"
-    points="24,116 40,70 54,130 68,62 84,122 98,74 114,128 128,66 144,118 158,76 174,124 190,68 203,108"/>
-  <polyline fill="none" stroke="#b83a29" stroke-width="2.8" stroke-linecap="round"
-    points="24,110 44,105 64,101 84,97 104,92 124,86 144,77 164,68 184,60 203,56"/>
-  <text x="26" y="42" font-family="IBM Plex Mono,monospace" font-size="9" fill="#7c8a99">raw</text>
-  <text x="148" y="46" font-family="IBM Plex Mono,monospace" font-size="9" fill="#b83a29">filtered</text>
-</svg></figure>
-    <div>
-      <span class="kind">Peer-reviewed method &middot; Python &middot; GPL-3.0</span>
-      <h3>Common-Mode Filtering for InSAR time series</h3>
-      <p>Volcano InSAR has a scale problem. The deformation at a small stratovolcano is a few millimetres a
-      year over a summit maybe five kilometres across, and the atmospheric delay sitting on top of it is
-      often larger and correlates with topography &mdash; the exact shape of the thing being measured.</p>
-      <p>The standard fix is to model the atmosphere from a global weather reanalysis such as ERA5, or a
-      product like GACOS. Those work well over large deformation fields and struggle at small volcanoes for a
-      simple reason: a weather-model grid cell spans tens of kilometres, so an edifice under roughly
-      20 km&sup2; sits inside one cell. The correction it supplies is close to a constant across the whole
-      target.</p>
-      <p>CMF gives up on modelling the atmosphere and measures it instead. Pixels in a ring of stable ground
-      around the volcano share most of the same delay but are not deforming, so their phase is a direct
-      sample of the noise at each acquisition date. Subtract that common mode epoch by epoch and the
-      time-series scatter drops by about 36% on its own, or up to 50% alongside an ERA5 correction.</p>
-      <p>It is built to sit inside an existing workflow rather than replace one, and has been used with
-      MintPy, StaMPS and LiCSBAS. Be careful where the deformation field is broad enough to reach into the
-      reference ring, because then the filter removes part of your signal.</p>
-      <div class="facts"><span>Python</span><span>MintPy / StaMPS / LiCSBAS</span><span>36% less scatter</span><span>GPL-3.0</span></div>
-      <div class="chips">
-        <a class="btn" href="https://github.com/mohammadnia11/Common-Mode-Filtering-CMF-" target="_blank" rel="noopener">Code on GitHub</a>
-        <a class="doi" href="https://doi.org/10.5281/zenodo.14629139" target="_blank" rel="noopener">doi <b>10.5281/zenodo.14629139</b></a>
-        <a class="doi" href="https://doi.org/10.1029/2025GL114853" target="_blank" rel="noopener">paper <b>10.1029/2025GL114853</b></a>
-      </div>
-    </div>
-  </article>
-
-  <article class="tool c-teal">
-    <figure><svg viewBox="0 0 220 190" role="img" aria-label="A search radius around an epicentre with volcanoes inside and outside">
-  <circle cx="110" cy="96" r="70" fill="rgba(23,120,98,.08)" stroke="#177862" stroke-width="1.6" stroke-dasharray="7 6"/>
-  <line x1="110" y1="96" x2="110" y2="26" stroke="#9aa8b6" stroke-width="1"/>
-  <text x="115" y="60" font-family="IBM Plex Mono,monospace" font-size="9" fill="#7c8a99">500 km</text>
-  <path d="M66 82 L59 95 L73 95 Z" fill="#b83a29"/>
-  <path d="M104 52 L98 64 L110 64 Z" fill="#a9711a"/>
-  <path d="M144 114 L138 127 L150 127 Z" fill="#177862"/>
-  <path d="M92 134 L86 147 L98 147 Z" fill="#2a5aa8"/>
-  <path d="M194 60 L188 73 L200 73 Z" fill="#9aa8b6"/>
-  <circle cx="110" cy="96" r="6.5" fill="#16202c" stroke="#fff" stroke-width="2"/>
-</svg></figure>
-    <div>
-      <span class="kind">Interactive &middot; runs in your browser &middot; GPL-3.0</span>
-      <h3>Earthquake&ndash;Volcano Proximity Explorer</h3>
-      <p>After a large earthquake, which volcanoes are close enough to be worth a look? Pick a time window
-      and a magnitude threshold, load the USGS catalogue, and click any event. The tool lists every
-      Smithsonian GVP Holocene volcano inside your chosen radius with its distance, azimuth, last known
-      eruption and activity evidence, drawn both as a schematic proximity plot and on a satellite basemap.</p>
-      <p>Click one of those volcanoes and it goes a step further: it queries the ASF radar archive for that
-      point and reports which Sentinel-1, NISAR or ALOS PALSAR tracks cover it, how often each repeats, and
-      the shortest interferogram on each track that spans the earthquake. That last number tells you whether
-      a co-event pair exists at all before you commit to processing anything.</p>
-      <p>The volcano catalogue ships with the page and loads on its own, so there is nothing to upload before
-      you start. Nothing you load is sent to a server. Proximity is spatial context only &mdash; a volcano
-      inside the radius does not by itself imply the earthquake triggered anything there.</p>
-      <div class="facts"><span>USGS FDSN</span><span>GVP Holocene catalogue</span><span>ASF archive check</span><span>No install</span></div>
-      <div class="chips">
-        <a class="btn" href="/eq-volcano-explorer/">Open the explorer</a>
-        <a class="btn quiet" href="https://github.com/mhmnia/eq-volcano-explorer" target="_blank" rel="noopener">Code on GitHub</a>
-        <a class="doi" href="https://doi.org/10.5281/zenodo.22067994" target="_blank" rel="noopener">doi <b>10.5281/zenodo.22067994</b></a>
-      </div>
-    </div>
-  </article>
-
-</div></section>
-<footer class="foot">
-  <div class="wrap">
-    <div class="cols">
-      <div><h4>Research</h4><ul>
-        <li><a href="publications.html">Publications</a></li>
-        <li><a href="tools.html">Software and tools</a></li>
-        <li><a href="gallery.html">Gallery</a></li>
-        <li><a href="cv.html">Curriculum vitae</a></li></ul></div>
-      <div><h4>Reading room</h4><ul>
-        <li><a href="volcanoes.html">Volcanoes</a></li>
-        <li><a href="insar.html">InSAR</a></li>
-        <li><a href="people.html">Inspirations</a></li></ul></div>
-      <div><h4>Profiles</h4><ul>
-        <li><a href="https://orcid.org/0009-0000-2193-2980" target="_blank" rel="noopener">ORCID</a></li>
-        <li><a href="https://scholar.google.com/citations?user=CLB8v-cAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a></li>
-        <li><a href="https://www.linkedin.com/in/mohammadhosein-mohammadnia-128904a3/" target="_blank" rel="noopener">LinkedIn</a></li>
-        <li><a href="https://github.com/mohammadnia11" target="_blank" rel="noopener">GitHub</a></li></ul></div>
-      <div><h4>Get in touch</h4><ul>
-        <li><a href="mailto:mh.mohammadnia1@gmail.com">mh.mohammadnia1@gmail.com</a></li>
-        <li><a href="contact.html">Contact page</a></li></ul></div>
-    </div>
-    <div class="base">
-      <span>&copy; 2026 Mohammadhossein Mohammadnia</span>
-      <span>Department of Earth Sciences, The University of Hong Kong</span>
-    </div>
-  </div>
-</footer>
-<script>
-(function(){var b=document.getElementById('burger'),m=document.getElementById('menu');
-if(!b||!m)return;b.addEventListener('click',function(){var o=m.classList.toggle('open');
-b.setAttribute('aria-expanded',o?'true':'false')})})();
-</script>
-</body>
-</html>
+</head><body><header class="masthead"><div class="wrap">
+<a class="sig" href="./"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="17" r="13" fill="none" stroke="#2a5aa8" stroke-width="2.2"/><circle cx="16" cy="17" r="8" fill="none" stroke="#177862" stroke-width="2.2"/><circle cx="16" cy="17" r="3.4" fill="#a9711a"/><path d="M16 3 L23 15 H9 Z" fill="#b83a29"/></svg><b>Mohammadnia</b></a>
+<button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span></button>
+<nav class="menu" id="menu"><a href="./">About</a><a href="publications.html">Publications</a><a href="gallery.html">Gallery</a><a href="tools.html" aria-current="page">Tools</a><a href="volcanoes.html">Volcanoes</a><a href="insar.html">InSAR</a><a href="people.html">Community leaders</a><a href="blog.html">Blog Posts</a><a href="cv.html">CV</a><a class="mark" href="contact.html">Contact</a></nav></div></header>
+<header class="phead"><div class="wrap"><h1>Software and tools</h1><p class="lede">Open tools built around practical research problems: cleaning small-scale InSAR time series and rapidly checking earthquake–volcano proximity.</p></div></header>
+<section class="band"><div class="wrap"><div class="grid two">
+<article class="tool c-violet"><div><span class="kind">Peer-reviewed method · Python · GPL-3.0</span><h3>Common-Mode Filtering for InSAR time series</h3><p>CMF measures common atmospheric noise from stable pixels around a target and removes it epoch by epoch. It is designed for small volcanic deformation fields where coarse weather-model corrections can struggle.</p><div class="facts"><span>Python</span><span>MintPy / StaMPS / LiCSBAS</span><span>~36% less scatter</span><span>Open source</span></div><div class="chips"><a class="btn" href="https://github.com/mohammadnia11/Common-Mode-Filtering-CMF-" target="_blank" rel="noopener">Code on GitHub</a><a class="doi" href="https://doi.org/10.5281/zenodo.14629139" target="_blank" rel="noopener">Zenodo DOI</a><a class="doi" href="https://doi.org/10.1029/2025GL114853" target="_blank" rel="noopener">Paper DOI</a></div></div></article>
+<article class="tool c-teal"><div><span class="kind">Interactive · browser based · GPL-3.0</span><h3>Earthquake–Volcano Proximity Explorer</h3><p>Select an earthquake, find nearby Holocene volcanoes, then check satellite radar coverage and possible co-event interferograms before committing to processing.</p><div class="facts"><span>USGS FDSN</span><span>GVP catalogue</span><span>ASF archive</span><span>No install</span></div><div class="chips"><a class="btn" href="/eq-volcano-explorer/">Open explorer</a><a class="btn quiet" href="https://github.com/mhmnia/eq-volcano-explorer" target="_blank" rel="noopener">GitHub</a><a class="doi" href="https://doi.org/10.5281/zenodo.22067994" target="_blank" rel="noopener">Zenodo DOI</a></div></div></article>
+</div></div></section><footer class="foot"><div class="wrap"><div class="cols">
+<div><h4>Research</h4><ul><li><a href="publications.html">Publications</a></li><li><a href="blog.html">Blog Posts</a></li><li><a href="tools.html">Software and tools</a></li><li><a href="gallery.html">Gallery</a></li></ul></div>
+<div><h4>Reading room</h4><ul><li><a href="volcanoes.html">Volcanoes</a></li><li><a href="insar.html">InSAR</a></li><li><a href="people.html">Community leaders</a></li></ul></div>
+<div><h4>Profiles</h4><ul><li><a href="https://bsky.app/profile/mohammadnia.bsky.social" target="_blank" rel="noopener">Bluesky</a></li><li><a href="https://orcid.org/0009-0000-2193-2980" target="_blank" rel="noopener">ORCID</a></li><li><a href="https://scholar.google.com/citations?user=CLB8v-cAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a></li><li><a href="https://www.linkedin.com/in/mohammadhosein-mohammadnia-128904a3/" target="_blank" rel="noopener">LinkedIn</a></li></ul></div>
+<div><h4>Affiliation</h4><ul><li><a href="https://www.ees.cuhk.edu.hk/" target="_blank" rel="noopener">Earth &amp; Environmental Sciences, CUHK</a></li><li>Hong Kong</li></ul></div>
+</div><div class="base"><span>&copy; 2026 Mohammadhossein Mohammadnia</span><span>Researcher · CUHK · Hong Kong</span></div></div></footer>
+<script>(function(){var b=document.getElementById('burger'),m=document.getElementById('menu');if(!b||!m)return;b.addEventListener('click',function(){var o=m.classList.toggle('open');b.setAttribute('aria-expanded',o?'true':'false')})})();</script></body></html>

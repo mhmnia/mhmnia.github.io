@@ -95,3 +95,44 @@ body{color:var(--u-ink);background:radial-gradient(circle at 8% 2%,rgba(47,95,17
 @media(max-width:520px){
   .quick-grid{grid-template-columns:1fr}
 }
+
+/* -------- final consistency fix -------- */
+.social-icon{
+  overflow:hidden;
+  padding:3px;
+}
+.social-icon img,
+.social-icon svg{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:contain;
+}
+.menu a[href="people.html"]{
+  /* label comes from HTML on replaced pages */
+}
+.resource-compact{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+.resource-compact .res{
+  margin:0!important;
+  min-width:0;
+  border-radius:16px;
+  box-shadow:0 8px 25px rgba(24,39,75,.05);
+}
+.resource-compact .res p{font-size:.78rem!important;line-height:1.45!important}
+.resource-compact .res h3{font-size:1rem!important;line-height:1.28!important}
+.cv-quick{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+  margin:12px 0 24px;
+}
+.cv-quick .box{padding:14px!important}
+.cv-quick .box h3{font-size:.92rem!important;margin-bottom:.3rem!important}
+.cv-quick .box p{font-size:.75rem!important;line-height:1.42!important}
+@media(max-width:800px){
+  .resource-compact,.cv-quick{grid-template-columns:1fr}
+}
