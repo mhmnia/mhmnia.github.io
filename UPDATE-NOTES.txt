@@ -1,9 +1,9 @@
-Apply these files to the root of mhmnia/mhmnia.github.io, preserving the assets/ and images/ folder structure. Prepared against main at 2f368ba.
+Website updates v2
 
-Changes: renamed community labels site-wide; added Valerie Cayol with official profile and photo; added non-exhaustive directory introduction; highlighted six press publishers; made Tools cards compact; bundled ten local Elsewhere icons; added direct YouTube viewing links and explicit iframe referrer policy while preserving embedded playback and the 3:21 timestamp.
+Copy ALL included files to the repository root while keeping the assets/ and images/ folders. This package includes the earlier changes as well as the new refinements. Do not upload only the HTML files: the CSS files and icons are required.
 
-YouTube sign-in/anti-bot prompts remain controlled by YouTube; the direct links provide an alternative to embedded playback. Changes have not been published.
+New: compact software cards; PhD supervisor and PhD thesis examiner badges; matching natural heights for the two desktop homepage cards; red YouTube buttons with accessible new-tab labels; direct versioned CSS references to avoid stale nested stylesheet imports.
 
-Checks: git diff --check, all local icon SVGs parsed, profile JPEG integrity, navigation labels, publisher labels, four video links and timestamp. Live browser playback has not been verified.
+Earlier: Valerie Cayol profile/photo, renamed community directory and non-exhaustive introduction, publisher highlights, local Elsewhere icons, direct YouTube links.
 
-Cayol profile and photo source: https://lmv.uca.fr/cayol-valerie-us/
+Validated source structure, local stylesheet paths, relationship labels, video links and timestamp. Live browser appearance and YouTube playback have not been tested. This package has not been published to GitHub.
