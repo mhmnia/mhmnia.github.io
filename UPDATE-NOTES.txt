@@ -1,9 +1,7 @@
-Apply these files to the root of mhmnia/mhmnia.github.io, preserving the assets/ and images/ folder structure. Prepared against main at 2f368ba.
+Website updates v3 — cumulative package
 
-Changes: renamed community labels site-wide; added Valerie Cayol with official profile and photo; added non-exhaustive directory introduction; highlighted six press publishers; made Tools cards compact; bundled ten local Elsewhere icons; added direct YouTube viewing links and explicit iframe referrer policy while preserving embedded playback and the 3:21 timestamp.
+Upload all included files to the repository root, preserving folder structure. Includes earlier Tools, homepage, YouTube, icons and press improvements.
 
-YouTube sign-in/anti-bot prompts remain controlled by YouTube; the direct links provide an alternative to embedded playback. Changes have not been published.
+Community: 16 unique short research summaries based on individual profiles; 12 supplied photographs matched by filename; existing relationship labels preserved; Tim Wright and Richard Walker profile links updated. Source links are recorded in docs/community-profile-sources.md.
 
-Checks: git diff --check, all local icon SVGs parsed, profile JPEG integrity, navigation labels, publisher labels, four video links and timestamp. Live browser playback has not been verified.
-
-Cayol profile and photo source: https://lmv.uca.fr/cayol-valerie-us/
+Verified: all 16 portraits exist and decode, all 16 summaries are unique and under 30 words, generic descriptions removed, relationship labels retained, git diff --check clean. Not published to GitHub; browser rendering has not been tested.
